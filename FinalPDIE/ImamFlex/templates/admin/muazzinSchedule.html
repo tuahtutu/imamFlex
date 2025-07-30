@@ -1,0 +1,449 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jadual Muazzin - ImamFlex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/ImamFlex.css' %}">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0d1b2a, #1b263b);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .header-img {
+      height: 250px;
+      background: url("{% static 'masjid.jpeg' %}") no-repeat center/cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-img::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(13,27,42,0.75);
+    }
+    .bismillah, .tagline {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .bismillah {
+      font-family: 'Scheherazade', serif;
+      font-size: 3rem;
+      color: gold;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+    .tagline {
+      color: #f1f1f1;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+     .main-wrapper {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 240px;
+            background-color: #0d1b2a;
+            padding-top: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .sidebar h2 {
+            color: gold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+.sidebar a, .dropdown-btn {
+    text-decoration: none;
+    color: white;
+    font-weight: 600; 
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    background: none;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+        .sidebar a:hover, .dropdown-btn:hover {
+            background-color: gold;
+            color: #1b1b1b;
+        }
+
+        .active {
+            background-color: gold;
+            color: #1b1b1b;
+        }
+
+        .dropdown-container {
+            display: none;
+            flex-direction: column;
+            padding-left: 30px;
+        }
+
+        .dropdown-container a {
+            font-size: 0.9rem;
+            padding: 8px 0;
+        }
+
+.dropdown-btn::after {
+    content: '\f107'; 
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-btn.active::after {
+    transform: rotate(180deg); 
+}
+
+
+        .content {
+            flex: 1;
+            padding: 30px 40px;
+        }
+    .calendar-actions {
+      text-align: right;
+    }
+    .calendar-actions button {
+      margin-left: 10px;
+      background: gold;
+      color: #0d1b2a;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .calendar-actions #publishMonthBtn {
+      background: #3498db;
+      color: white;
+    }
+    .weekday-labels {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      margin-bottom: 10px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
+    .day-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid gold;
+      border-radius: 10px;
+      padding: 10px;
+      min-height: 130px;
+      position: relative;
+    }
+    .day-box .date {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: gold;
+    }
+    .muazzin-list {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #ddd;
+      margin-top: 10px;
+    }
+    .edit-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 0.85rem;
+      color: #888;
+      cursor: pointer;
+    }
+    .edit-btn:hover {
+      color: #ffd700;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #1b263b;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 80%;
+      max-width: 600px;
+      color: white;
+      position: relative;
+      border: 1px solid gold;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5rem;
+      color: gold;
+      cursor: pointer;
+    }
+    .form-row {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .form-row label {
+      color: gold;
+      font-weight: 500;
+      min-width: 80px;
+    }
+    .form-row select {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid gold;
+      background: #0d1b2a;
+      color: white;
+    }
+    #assignForm button {
+      margin-top: 20px;
+      background: gold;
+      color: #0d1b2a;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header-img">
+  <div>
+    <div class="bismillah">بِسْمِ اللّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <div class="tagline">Selamat datang ke ImamFlex - Sistem Pengurusan Imam & Khutbah</div>
+  </div>
+</div>
+
+<div class="main-wrapper">
+    <div class="sidebar">
+        <h2>ImamFlex</h2>
+        <a href="{% url 'adminDash' %}" class="active"><i class="fas fa-home"></i> Home</a>
+
+        <button class="dropdown-btn"><i class="fas fa-user-tie"></i> Imam</button>
+        <div class="dropdown-container">
+            <a href="{% url 'imam_management' %}">Manage Imam</a>
+            <a href="{% url 'imam_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn active"><i class="fas fa-bullhorn"></i> Muazzin</button>
+        <div class="dropdown-container" style="display: flex;">
+            <a href="{% url 'muazzin_management' %}">Manage Muazzin</a>
+            <a href="{% url 'muazzin_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn"><i class="fas fa-tools"></i> Siak</button>
+      <div class="dropdown-container" >
+        <a href="{% url 'siak_management' %}" >Manage Siak</a>
+        <a href="{% url 'siak_schedule' %}">Manage Schedule</a>
+
+      </div>
+
+       <button class="dropdown-btn"><i class="fas fa-calendar-check"></i> Leave</button>
+        <div class="dropdown-container">
+            <a href="{% url 'admin_leave_list' %}">Manage Leave</a>
+            
+        </div>
+
+      <button class="dropdown-btn"><i class="fas fa-pray"></i> Jumaat</button>
+      <div class="dropdown-container">
+        <a href="{% url 'khutbah_list' %}">Khutbah</a>
+      </div>
+
+      <button class="dropdown-btn"><i class="fas fa-chart-bar"></i> Attendance Report</button>
+        <div class="dropdown-container">
+            <a href="{% url 'attendance_report' %}">Attendance Report</a>
+        </div>
+
+       
+    </div>
+
+  <div class="content">
+    <h2>Jadual Muazzin - <span class="highlight">{{ month_name }} {{ year }}</span></h2>
+
+    <form method="get" style="display: flex; gap: 10px; align-items: center;">
+      <label for="month">Bulan:</label>
+      <select name="month" id="month" onchange="this.form.submit()">
+        {% for value, name in months %}
+          <option value="{{ value }}" {% if value == month %}selected{% endif %}>{{ name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="year">Tahun:</label>
+      <select name="year" id="year" onchange="this.form.submit()">
+        {% for y in years %}
+          <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+      </select>
+    </form>
+
+    <div class="calendar-actions">
+      <form method="post" style="display:inline;">{% csrf_token %}
+        <input type="hidden" name="month" value="{{ month }}">
+        <input type="hidden" name="year" value="{{ year }}">
+        <button type="submit" name="saveMonthBtn">Simpan Bulan Ini</button>
+      </form>
+      <form method="post" style="display:inline;">{% csrf_token %}
+        <input type="hidden" name="month" value="{{ month }}">
+        <input type="hidden" name="year" value="{{ year }}">
+        <button type="submit" name="publishMonthBtn" id="publishMonthBtn">Publish Bulan Ini</button>
+      </form>
+    </div>
+
+    <div class="weekday-labels">
+      <div>Ahad</div><div>Isnin</div><div>Selasa</div><div>Rabu</div><div>Khamis</div><div>Jumaat</div><div>Sabtu</div>
+    </div>
+
+    <div class="calendar-grid">
+      {% for week in calendar %}
+        {% for day in week %}
+          {% if day %}
+            <div class="day-box" data-date="{{ day.date|date:'Y-m-d' }}">
+              <div class="date">{{ day.date.day }}</div>
+              <div class="muazzin-list" id="muazzinList_{{ day.date|date:'Y-m-d' }}">
+                {% for prayer, muazzin in day.prayers.items %}
+                  <div>{{ muazzin|default:"-" }}</div>
+                {% endfor %}
+              </div>
+              <div class="edit-btn" onclick="openAssignModal('{{ day.date|date:'Y-m-d' }}')">
+                <i class="fas fa-pen"></i>
+              </div>
+            </div>
+          {% else %}
+            <div class="day-box" style="background: transparent; border: none;"></div>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <h4>Hubungi Kami</h4>
+  <p>Masjid Al Mursyid Guring, No. 30, RPA Pauh(Lama), 02600 Arau, Perlis</p>
+  <p>Email: imamflex@masjid.my | Telefon: +60 19-518 6554</p>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/profile.php?id=100069456158805"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-whatsapp"></i></a>
+  </div>
+</div>
+
+
+<div id="assignModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>Assign Muazzin untuk <span id="assignDateLabel"></span></h2>
+    <form id="assignForm" method="post">{% csrf_token %}
+      {% for prayer in prayers %}
+        <div class="form-row">
+          <label for="{{ prayer }}">Solat {{ prayer }}</label>
+          <select name="{{ prayer }}" class="muazzin-select">
+            <option value="">-- Pilih Muazzin --</option>
+            {% for muazzin in muazzin_list %}
+              <option value="{{ muazzin.muazzin_id }}">{{ muazzin.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endfor %}
+      <button type="submit" id="saveBtn">Simpan</button>
+    </form>
+  </div>
+</div>
+
+<script>
+const modal = document.getElementById("assignModal");
+const closeBtn = document.querySelector(".close-btn");
+const assignDateLabel = document.getElementById("assignDateLabel");
+const assignForm = document.getElementById("assignForm");
+
+function openAssignModal(date) {
+  modal.style.display = "flex";
+  assignDateLabel.innerText = date;
+  assignForm.action = `/muazzin/schedule/assign/${date}/`;
+}
+
+closeBtn.onclick = () => modal.style.display = "none";
+window.onclick = e => { if (e.target == modal) modal.style.display = "none"; };
+
+assignForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const date = assignDateLabel.innerText;
+  const data = new FormData(assignForm);
+  fetch(assignForm.action, {
+    method: "POST",
+    body: data
+  })
+  .then(res => res.json())
+  .then(response => {
+    if (response.status === 'success') {
+      const muazzinListDiv = document.getElementById(`muazzinList_${date}`);
+      muazzinListDiv.innerHTML = "";
+      for (const [prayer, name] of Object.entries(response.data)) {
+        muazzinListDiv.innerHTML += `<div>${name}</div>`;
+      }
+      modal.style.display = "none";
+    } else {
+      alert("Error: " + response.message);
+    }
+  })
+  .catch(err => console.error(err));
+});
+ const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+  dropdownBtns.forEach(btn => {
+    btn.addEventListener("click", function () {
+      this.classList.toggle("active");
+      const container = this.nextElementSibling;
+      if (container.style.display === "flex") {
+        container.style.display = "none";
+      } else {
+        container.style.display = "flex";
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

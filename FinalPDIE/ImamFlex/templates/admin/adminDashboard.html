@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - ImamFlex</title>
+    <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #0d1b2a, #1b263b);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header-img {
+            height: 250px;
+            background: url("{% static 'masjid.jpeg' %}") no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .header-img::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(13, 27, 42, 0.75);
+        }
+
+        .header-img > div {
+            z-index: 2;
+            text-align: center;
+        }
+
+        .bismillah {
+            font-family: 'Scheherazade', serif;
+            font-size: 3rem;
+            color: gold;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: #f1f1f1;
+            margin-top: 10px;
+        }
+
+        .main-wrapper {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 240px;
+            background-color: #0d1b2a;
+            padding-top: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .sidebar h2 {
+            color: gold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+.sidebar a, .dropdown-btn {
+    text-decoration: none;
+    color: white;
+    font-weight: 600; 
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    background: none;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+        .sidebar a:hover, .dropdown-btn:hover {
+            background-color: gold;
+            color: #1b1b1b;
+        }
+
+        .active {
+            background-color: gold;
+            color: #1b1b1b;
+        }
+
+        .dropdown-container {
+            display: none;
+            flex-direction: column;
+            padding-left: 30px;
+        }
+
+        .dropdown-container a {
+            font-size: 0.9rem;
+            padding: 8px 0;
+        }
+
+.dropdown-btn::after {
+    content: '\f107'; 
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-btn.active::after {
+    transform: rotate(180deg); 
+}
+
+
+        .content {
+            flex: 1;
+            padding: 30px 40px;
+        }
+
+        .welcome-card {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid gold;
+            border-radius: 15px;
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
+        }
+
+        .welcome-card h2 {
+            font-size: 1.8rem;
+            color: gold;
+        }
+
+        .highlight {
+            color: white;
+        }
+
+        .subtext {
+            font-size: 0.95rem;
+            color: #ccc;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropbtn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .profile-icon {
+            width: 35px;
+            height: 35px;
+            background-color: gold;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #0d1b2a;
+            font-size: 1.2rem;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color:c;
+            min-width: 150px;
+            border-radius: 10px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: gold;
+            color: #0d1b2a;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            color: gold;
+        }
+
+        .footer {
+            background-color: #0d1b2a;
+            padding: 30px 20px;
+            text-align: center;
+            color: #ccc;
+        }
+
+        .footer h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: gold;
+        }
+
+        .footer p {
+            margin: 6px 0;
+        }
+
+        .social-icons a {
+            color: gold;
+            margin: 0 10px;
+            font-size: 1.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+
+            .sidebar a, .dropdown-btn {
+                text-align: center;
+                padding: 10px;
+            }
+
+            .dropdown-container {
+                padding-left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="header-img">
+    <div>
+        <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+        <div class="tagline">Selamat datang ke ImamFlex - Sistem Pengurusan Imam & Khutbah</div>
+    </div>
+</div>
+
+<div class="main-wrapper">
+
+    <div class="sidebar">
+        <h2>ImamFlex</h2>
+        <a href="{% url 'adminDash' %}" class="active"><i class="fas fa-home"></i> Home</a>
+
+        <button class="dropdown-btn"><i class="fas fa-user-tie"></i> Imam</button>
+        <div class="dropdown-container">
+            <a href="{% url 'imam_management' %}">Manage Imam</a>
+            <a href="{% url 'imam_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn"><i class="fas fa-bullhorn"></i> Muazzin</button>
+        <div class="dropdown-container">
+            <a href="{% url 'muazzin_management' %}">Manage Muazzin</a>
+            <a href="{% url 'muazzin_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn"><i class="fas fa-tools"></i> Siak</button>
+      <div class="dropdown-container" >
+        <a href="{% url 'siak_management' %}" >Manage Siak</a>
+        <a href="{% url 'siak_schedule' %}">Manage Schedule</a>
+
+      </div>
+
+       <button class="dropdown-btn"><i class="fas fa-calendar-check"></i> Leave</button>
+        <div class="dropdown-container">
+            <a href="{% url 'admin_leave_list' %}">Manage Leave</a>
+            
+        </div>
+
+      <button class="dropdown-btn"><i class="fas fa-pray"></i> Jumaat</button>
+      <div class="dropdown-container">
+        <a href="{% url 'khutbah_list' %}">Khutbah</a>
+      </div>
+
+      <button class="dropdown-btn"><i class="fas fa-chart-bar"></i> Attendance Report</button>
+        <div class="dropdown-container">
+            <a href="{% url 'attendance_report' %}">Attendance Report</a>
+            
+            
+        </div>
+
+       
+    </div>
+
+
+    <div class="content">
+        <div class="welcome-card">
+            <div>
+                <h2>Welcome, <span class="highlight">Admin</span></h2>
+                <p class="subtext">Selamat menjalankan tugas mulia!</p>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <div class="profile-icon"><i class="fas fa-user"></i></div>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="openLogoutModal()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:right; margin-bottom: 20px;">
+  <form method="POST" action="{% url 'send_manual_reminder' %}">
+    {% csrf_token %}
+    <button type="submit" style="background:gold; color:#0d1b2a; padding:10px 18px; font-weight:bold; border-radius:6px; border:none; cursor:pointer;">
+      📤 Hantar Peringatan Tugas Hari Ini
+    </button>
+  </form>
+</div>
+
+
+       
+<div class="card">
+  <h3>Imam Schedule Hari Ini</h3>
+  {% if imam_schedule_today %}
+    <ul>
+      {% for duty in imam_schedule_today %}
+        <li>
+  {{ duty.prayer_time }} – 
+  {% for imam in imams %}
+    {% if imam.imam_id == duty.role_id %}
+      {{ imam.name }}
+    {% endif %}
+  {% endfor %}
+</li>
+
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Tiada tugasan imam hari ini.</p>
+  {% endif %}
+</div>
+
+
+<div class="card">
+  <h3>Topik Khutbah Terkini</h3>
+  {% if latest_khutbah %}
+    <p><strong>Tarikh:</strong> {{ latest_khutbah.date }}</p>
+    <p><strong>Topik:</strong> {{ latest_khutbah.khutbah_topic }}</p>
+    
+  {% else %}
+    <p>Tiada rekod khutbah terkini.</p>
+  {% endif %}
+</div>
+
+
+<div class="card">
+  <h3>Jadual Khutbah Jumaat Seterusnya</h3>
+  {% if next_jumaat_khutbah %}
+    <p><strong>Tarikh:</strong> {{ next_jumaat_khutbah.date }}</p>
+    <p><strong>Topik:</strong> {{ next_jumaat_khutbah.khutbah_topic }}</p>
+  {% else %}
+    <p>Tiada khutbah Jumaat akan datang direkodkan.</p>
+  {% endif %}
+</div>
+
+
+<div class="card">
+  <h3>Permohonan Cuti Belum Lulus</h3>
+  {% if pending_leaves %}
+    <ul>
+      {% for leave in pending_leaves|slice:":3" %}
+        <li>{{ leave.roleType }} – {{ leave.roleID.name }} ({{ leave.startDate }} hingga {{ leave.endDate }})</li>
+      {% endfor %}
+    </ul>
+    <p><em>{{ pending_leaves.count }} permohonan belum diluluskan</em></p>
+  {% else %}
+    <p>Tiada permohonan cuti tertunggak.</p>
+  {% endif %}
+</div>
+
+
+<div class="card">
+  <h3>Jumlah Kakitangan</h3>
+  <ul>
+    <li><strong>Imam:</strong> {{ imam_count }}</li>
+    <li><strong>Muazzin:</strong> {{ muazzin_count }}</li>
+    <li><strong>Siak:</strong> {{ siak_count }}</li>
+  </ul>
+</div>
+
+    </div>
+</div>
+
+ <div class="footer">
+    <h4>Hubungi Kami</h4>
+    <p>Masjid Al Mursyid Guring,No. 30, Rpa Pauh(Lama),02600 Arau,Perlis,</p>
+    <p>Email: imamflex@masjid.my | Telefon: +60 19-518 6554</p>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/profile.php?id=100069456158805"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+
+
+<div id="logoutModal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;">
+  <div style="background: #1b263b; padding: 30px; border-radius: 12px; border: 1px solid gold; box-shadow: 0 0 30px rgba(255,215,0,0.2); width: 90%; max-width: 400px; text-align: center;">
+    <h3 style="color: gold;">Log Keluar</h3>
+    <p style="margin: 15px 0; color: #ccc;">Adakah anda pasti ingin log keluar dari sistem?</p>
+    <div style="margin-top: 25px;">
+      <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" style="background: gold; color: #0d1b2a; padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; margin-right: 10px;">Ya, Log Keluar</button>
+      </form>
+      <button onclick="closeLogoutModal()" style="background: transparent; color: #ccc; padding: 10px 20px; border: 1px solid #ccc; border-radius: 6px;">Batal</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+    dropdownBtns.forEach(btn => {
+        btn.addEventListener("click", function () {
+            this.classList.toggle("active");
+            const container = this.nextElementSibling;
+            if (container.style.display === "flex") {
+                container.style.display = "none";
+            } else {
+                container.style.display = "flex";
+            }
+        });
+    });
+
+
+  function openLogoutModal() {
+    document.getElementById("logoutModal").style.display = "flex";
+  }
+
+  function closeLogoutModal() {
+    document.getElementById("logoutModal").style.display = "none";
+  }
+
+
+</script>
+
+</body>
+</html>

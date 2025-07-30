@@ -1,0 +1,327 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ahli Jawatankuasa - ImamFlex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0d1b2a, #1b263b);
+      color: #eee;
+    }
+
+    .header-img {
+      height: 200px;
+      background: url("{% static 'masjid.jpeg' %}") no-repeat center/cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-img::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(13,27,42,0.75);
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .bismillah {
+      font-family: 'Scheherazade', serif;
+      font-size: 3rem;
+      color: gold;
+      margin-bottom: 5px;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: #f1f1f1;
+    }
+
+    .nav {
+      background: #0d1b2a;
+      padding: 12px 30px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      border-bottom: 2px solid gold;
+    }
+
+    .nav a {
+      color: gold;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .nav a:hover {
+      color: white;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 30px auto;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .carousel-slide {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.4);
+      border: none;
+      color: white;
+      padding: 10px 14px;
+      font-size: 1.2rem;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(0,0,0,0.6);
+    }
+
+    .prev { left: 15px; }
+    .next { right: 15px; }
+
+    .section {
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section h2 {
+      color: gold;
+      margin-bottom: 15px;
+      border-bottom: 3px solid gold;
+      display: inline-block;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 25px;
+      margin-top: 25px;
+    }
+
+    .team-card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .team-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .team-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid gold;
+      object-fit: cover;
+      margin-bottom: 12px;
+    }
+
+    .team-card h4 { color: gold; margin: 10px 0 5px; }
+    .team-card p { color: #ccc; font-size: 0.9rem; }
+
+    .welcome-card {
+      background: rgba(255,255,255,0.05);
+      border-left: 5px solid gold;
+      padding: 25px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      max-width: 1000px;
+      margin: 40px auto;
+    }
+
+    .welcome-card h2 {
+      color: gold;
+      margin-bottom: 10px;
+    }
+
+    .welcome-card p {
+      color: #ddd;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      background: #111622;
+      padding: 25px;
+      color: #aaa;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    footer h4 { color: gold; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+
+<div class="header-img">
+  <div class="header-content">
+    <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+    <p class="tagline">Maklumat Harian Jemaah</p>
+  </div>
+</div>
+
+
+<div class="nav">
+  <a href="{% url 'jemaah_home' %}">Utama</a>
+  <a href="{% url 'jemaah_khutbah' %}">Khutbah</a>
+  <a href="{% url 'ajk_info' %}">Pengurusan Masjid</a>
+</div>
+
+
+<div class="carousel-container">
+  <div class="carousel-wrapper">
+    <button class="carousel-btn prev"><i class="fa fa-chevron-left"></i></button>
+    <div class="carousel-slide">
+      <img src="{% static 'masjid1.jpg' %}" alt="Masjid 1">
+      <img src="{% static 'masjid2.jpeg' %}" alt="Masjid 2">
+      <img src="{% static 'masjid3.jpg' %}" alt="Masjid 3">
+    </div>
+    <button class="carousel-btn next"><i class="fa fa-chevron-right"></i></button>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="welcome-card">
+    <h2>✨ Selamat Datang ke Masjid Al-Mursyid</h2>
+    <p>
+      Masjid Al-Mursyid Guring di Arau, Perlis merupakan tempat ibadah dan komuniti yang sentiasa aktif dengan aktiviti harian, kelas ilmu, dan perkhidmatan kepada jemaah.
+      Kami komited menyampaikan maklumat tugasan imam, khutbah, dan pengurusan AJK dengan lebih mudah melalui ImamFlex.
+    </p>
+  </div>
+</div>
+
+
+<div class="section">
+  <h2>Imam</h2>
+  <div class="team-grid">
+    {% for imam in imam_list %}
+      <div class="team-card">
+        {% if imam.profile_picture %}
+          <img src="{{ imam.profile_picture.url }}" alt="{{ imam.name }}">
+        {% else %}
+          <img src="{% static 'default-ajk.jpg' %}" alt="Tiada gambar">
+        {% endif %}
+        <h4>{{ imam.name }}</h4><p>Imam</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <h2>Muazzin</h2>
+  <div class="team-grid">
+    {% for muazzin in muazzin_list %}
+      <div class="team-card">
+        {% if muazzin.profile_picture %}
+          <img src="{{ muazzin.profile_picture.url }}" alt="{{ muazzin.name }}">
+        {% else %}
+          <img src="{% static 'default-ajk.jpg' %}" alt="Tiada gambar">
+        {% endif %}
+        <h4>{{ muazzin.name }}</h4><p>Muazzin</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <h2>Siak</h2>
+  <div class="team-grid">
+    {% for siak in siak_list %}
+      <div class="team-card">
+        {% if siak.profile_picture %}
+          <img src="{{ siak.profile_picture.url }}" alt="{{ siak.name }}">
+        {% else %}
+          <img src="{% static 'default-ajk.jpg' %}" alt="Tiada gambar">
+        {% endif %}
+        <h4>{{ siak.name }}</h4><p>Siak</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+<footer>
+  <h4>Hubungi Kami</h4>
+  <p>Masjid Al Mursyid Guring, Arau, Perlis</p>
+  <p>Email: imamflex@masjid.my | Tel: +60 19-518 6554</p>
+</footer>
+
+
+<script>
+  const carousel = document.querySelector('.carousel-slide');
+  const prevBtn = document.querySelector('.prev');
+  const nextBtn = document.querySelector('.next');
+
+  const slides = carousel.children;
+  let counter = 0;
+  let slideWidth = slides[0].clientWidth;
+
+  function slideTo(index) {
+    carousel.style.transition = 'transform 0.5s ease-in-out';
+    carousel.style.transform = `translateX(-${slideWidth * index}px)`;
+  }
+
+  nextBtn.addEventListener('click', () => {
+    counter = (counter + 1) % slides.length;
+    slideTo(counter);
+  });
+
+  prevBtn.addEventListener('click', () => {
+    counter = (counter - 1 + slides.length) % slides.length;
+    slideTo(counter);
+  });
+
+  window.addEventListener('resize', () => {
+    slideWidth = slides[0].clientWidth;
+    slideTo(counter);
+  });
+</script>
+
+</body>
+</html>

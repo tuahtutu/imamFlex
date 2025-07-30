@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profil Muazzin - ImamFlex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2d9b6cfcb.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      background: linear-gradient(to right, #0d1b2a, #1b263b);
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      margin: 0;
+      padding: 40px;
+    }
+    h2 {
+      color: gold;
+      margin-bottom: 30px;
+    }
+    form {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+      max-width: 600px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: none;
+    }
+    input[type="file"] {
+      background: transparent;
+      color: white;
+    }
+    input[readonly] {
+      background-color: #ccc;
+      color: #333;
+    }
+    button {
+      background-color: gold;
+      color: #0d1b2a;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid gold;
+      display: block;
+      margin: 0 auto 20px;
+    }
+    .btn-back {
+      background-color: #ccc;
+      color: #1b1b1b;
+      margin-top: 20px;
+      display: block;
+      width: 100%;
+      text-align: center;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .btn-back:hover {
+      background-color: gold;
+      color: #0d1b2a;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 align="center">Profil Muazzin</h2>
+  <form method="POST" enctype="multipart/form-data" onsubmit="return confirmUpdate()">
+    {% csrf_token %}
+
+    {% if muazzin.profile_picture %}
+      <img src="{{ muazzin.profile_picture.url }}" alt="Profile Picture" class="profile-pic">
+    {% endif %}
+
+    <label>ID Muazzin</label>
+    <input type="text" name="muazzin_id" value="{{ muazzin.muazzin_id }}" readonly>
+
+    <label>Nama</label>
+    <input type="text" name="name" value="{{ muazzin.name }}" required>
+
+    <label>No IC</label>
+    <input type="text" name="ic_number" value="{{ muazzin.ic_number }}" readonly>
+
+    <label>No Telefon</label>
+    <input type="text" name="contact_number" value="{{ muazzin.contact_number }}">
+
+    <label>Email</label>
+    <input type="email" name="email" value="{{ muazzin.email }}">
+
+    <label>Alamat</label>
+    <textarea name="address">{{ muazzin.address }}</textarea>
+
+    <label>Gambar Profil</label>
+    <input type="file" name="profile_picture" accept="image/*">
+
+    <button type="submit">Simpan</button>
+    <a href="{% url 'muazzinDash' %}" class="btn-back">← Kembali ke Dashboard</a>
+  </form>
+
+  <script>
+    function confirmUpdate() {
+      return confirm("Adakah anda pasti mahu menyimpan perubahan profil ini?");
+    }
+  </script>
+
+</body>
+</html>

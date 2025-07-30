@@ -1,0 +1,278 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Muazzin Dashboard - ImamFlex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2d9b6cfcb.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0d1b2a, #1b263b);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .header-img {
+      height: 200px;
+      background: url("{% static 'masjid.jpeg' %}") no-repeat center center/cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-img::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(13, 27, 42, 0.7);
+    }
+
+    .header-img > div {
+      z-index: 2;
+      text-align: center;
+    }
+
+    .bismillah {
+      font-family: 'Scheherazade', serif;
+      font-size: 2.5rem;
+      color: gold;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: #ccc;
+    }
+
+    .main-wrapper {
+      display: flex;
+      flex: 1;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #0d1b2a;
+      padding-top: 30px;
+      box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+    }
+
+    .sidebar h2 {
+      color: gold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover, .sidebar a.active {
+      background-color: gold;
+      color: #1b263b;
+    }
+
+    .content {
+      flex: 1;
+      padding: 30px 40px;
+    }
+
+    .welcome-card {
+      background: rgba(255, 215, 0, 0.1);
+      border: 1px solid gold;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .welcome-card h2 {
+      color: gold;
+    }
+
+    .highlight {
+      color: white;
+    }
+
+    .profile-icon, .big-profile {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: gold;
+    }
+
+    .big-profile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .big-profile img:hover {
+      transform: scale(1.1);
+    }
+
+    .card {
+      background-color: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(255,215,0,0.1);
+    }
+
+    .card h3 {
+      color: gold;
+    }
+
+    .footer {
+      background-color: #0d1b2a;
+      text-align: center;
+      color: #ccc;
+      padding: 20px;
+    }
+
+    .footer h4 {
+      color: gold;
+      margin-bottom: 10px;
+    }
+
+    .footer p {
+      margin: 5px 0;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropbtn {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: #1b263b;
+      min-width: 150px;
+      border-radius: 10px;
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: gold;
+      color: #0d1b2a;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header-img">
+  <div>
+    <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+    <div class="tagline">Selamat datang Muazzin ke ImamFlex</div>
+  </div>
+</div>
+
+<div class="main-wrapper">
+
+  <div class="sidebar">
+    <h2>ImamFlex</h2>
+    <a href="{% url 'muazzinDash' %}" class="active">Home</a>
+    <a href="{% url 'muazzin_schedule_side' %}">My Schedule</a>
+    <a href="{% url 'muazzin_leave_history' %}">My Leave's Application</a>
+    <a href="{% url 'muazzin_attendance' %}">My Attendance</a>
+  </div>
+
+
+  <div class="content">
+    <div class="welcome-card">
+      <div>
+        <h2>Welcome, <span class="highlight">{{ muazzin.name }}</span></h2>
+        <p>Semoga sentiasa diberkati dalam tugas.</p>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">
+          {% if muazzin.profile_picture %}
+            <div class="big-profile">
+              <img src="{{ muazzin.profile_picture.url }}" alt="Profil">
+            </div>
+          {% else %}
+            <div class="profile-icon"><i class="fas fa-user"></i></div>
+          {% endif %}
+        </button>
+        <div class="dropdown-content">
+          <a href="{% url 'muazzin_profile' %}"><i class="fas fa-user-cog"></i> Profil</a>
+          <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Jadual Hari Ini</h3>
+      {% if muazzin_schedule_today %}
+        <ul>
+          {% for duty in muazzin_schedule_today %}
+            <li>{{ duty.prayer_time }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Tiada Jadual untuk hari ini!</p>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <h3>📌Tugasan Sebagai Pengganti ({{ month_name }} {{ today.year }})</h3>
+      {% if replacement_this_month %}
+        {% if replacement_this_month.count > 0 %}
+          <ul>
+            {% for duty in replacement_this_month %}
+              <li><strong>{{ duty.date }}</strong>: {{ duty.prayer_time }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>Tiada tugasan pengganti bulan ini.</p>
+        {% endif %}
+      {% else %}
+        <p>Tiada tugasan pengganti bulan ini.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <h4>Hubungi Kami</h4>
+  <p>Masjid Al Mursyid Guring, Arau, Perlis</p>
+  <p>Email: imamflex@masjid.my | Tel: +60 19-518 6554</p>
+</div>
+
+</body>
+</html>

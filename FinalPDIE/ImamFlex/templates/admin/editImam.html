@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <title>Kemaskini Imam - ImamFlex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2d9b6cfcb.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0d1b2a, #1b263b);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .header-img {
+      height: 250px;
+      background: url("{% static 'masjid.jpeg' %}") no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .header-img::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(13, 27, 42, 0.75);
+    }
+
+    .bismillah, .tagline {
+      z-index: 2;
+      position: relative;
+      text-align: center;
+    }
+
+    .bismillah {
+      font-family: 'Scheherazade', serif;
+      font-size: 3rem;
+      color: gold;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    .tagline {
+      color: #f1f1f1;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+
+    .content {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: gold;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: gold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-update {
+      background-color: gold;
+      color: #0d1b2a;
+      margin-top: 10px;
+      display: block;
+      width: 100%;
+    }
+
+    .btn-back {
+      background-color: #ccc;
+      color: #1b1b1b;
+      margin-top: 15px;
+      display: block;
+      width: 100%;
+      text-align: center;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .footer {
+      background-color: #0d1b2a;
+      padding: 30px 20px;
+      text-align: center;
+      color: #ccc;
+      margin-top: auto;
+    }
+
+    .footer h4 {
+      color: gold;
+      margin-bottom: 10px;
+    }
+
+    .social-icons a {
+      color: gold;
+      margin: 0 10px;
+      font-size: 1.3rem;
+    }
+
+    .social-icons a:hover {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-img">
+    <div>
+      <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+      <div class="tagline">Pengurusan Imam Masjid & Jadual Tugas Harian</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <h2>Kemaskini Maklumat Imam</h2>
+    <form method="POST" onsubmit="return confirmUpdate()">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="imam_id">ID Imam</label>
+        <input type="text" id="imam_id" name="imam_id" value="{{ imam.imam_id }}" readonly>
+      </div>
+      <div class="form-group">
+        <label for="name">Nama</label>
+        <input type="text" id="name" name="name" value="{{ imam.name }}" required>
+      </div>
+      <div class="form-group">
+        <label for="ic_number">No IC</label>
+        <input type="text" id="ic_number" name="ic_number" value="{{ imam.ic_number }}" required>
+      </div>
+      <div class="form-group">
+        <label for="contact_number">No Telefon</label>
+        <input type="text" id="contact_number" name="contact_number" value="{{ imam.contact_number }}" required>
+      </div>
+
+      <button type="submit" class="btn btn-update">Update Imam</button>
+    </form>
+
+    <a href="{% url 'imam_management' %}" class="btn-back">← Kembali ke Pengurusan Imam</a>
+  </div>
+
+  <div class="footer">
+    <h4>Hubungi Kami</h4>
+    <p>Masjid Al-Taqwa, Jalan Barakah, 43000 Kajang, Selangor</p>
+    <p>Email: imamflex@masjid.my | Telefon: 03-1234 5678</p>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+
+  <script>
+    function confirmUpdate() {
+      return confirm("Anda pasti ingin mengemaskini maklumat Imam ini?");
+    }
+  </script>
+</body>
+</html>

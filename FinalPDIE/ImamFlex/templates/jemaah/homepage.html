@@ -1,0 +1,242 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ImamFlex - Laman Jemaah</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0d1b2a, #1b263b);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .header-img {
+      height: 200px;
+      background: url("{% static 'masjid.jpeg' %}") no-repeat center/cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-img::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(13,27,42,0.75);
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .header-content h1 {
+      font-family: 'Scheherazade', serif;
+      font-size: 3rem;
+      color: gold;
+    }
+
+    .header-content p {
+      font-size: 1rem;
+      color: #f1f1f1;
+    }
+
+    .nav {
+      background: #0d1b2a;
+      padding: 12px 30px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      border-bottom: 2px solid gold;
+    }
+
+    .nav a {
+      color: gold;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .nav a:hover {
+      color: white;
+    }
+
+    .section {
+      padding: 40px;
+      flex: 1;
+    }
+
+    h2 {
+      color: gold;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .solat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .solat-card {
+      background: #1b263b;
+      border: 1px solid gold;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .solat-card h4 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: gold;
+    }
+
+    .solat-card p {
+      margin: 5px 0 0;
+      color: white;
+      font-weight: bold;
+    }
+
+    .footer {
+      background: #0d1b2a;
+      padding: 20px;
+      text-align: center;
+      color: #ccc;
+      border-top: 2px solid gold;
+    }
+
+    .footer h4 {
+      color: gold;
+    }
+
+    .bismillah {
+      font-family: 'Scheherazade', serif;
+      font-size: 3rem;
+      color: gold;
+      margin-bottom: 5px;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: #f1f1f1;
+    }
+
+    .login-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: gold;
+      color: #0d1b2a;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .login-btn:hover {
+      background-color: #ffcc00;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+<div class="header-img">
+  <div class="header-content">
+    <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+    <p class="tagline">Maklumat Harian Jemaah</p>
+  </div>
+</div>
+
+<div class="nav">
+  <a href="{% url 'jemaah_home' %}">Utama</a>
+  <a href="{% url 'jemaah_khutbah' %}">Khutbah</a>
+  <a href="{% url 'ajk_info' %}">Pengurusan Masjid</a>
+  
+</div>
+
+<div class="section">
+
+ 
+  <div class="card">
+    <h2>🕋 Waktu Solat Hari Ini</h2>
+    <div class="solat-grid">
+      <div class="solat-card"><h4>Subuh</h4><p>{{ solat_times.Subuh }}</p></div>
+      <div class="solat-card"><h4>Zohor</h4><p>{{ solat_times.Zohor }}</p></div>
+      <div class="solat-card"><h4>Asar</h4><p>{{ solat_times.Asar }}</p></div>
+      <div class="solat-card"><h4>Maghrib</h4><p>{{ solat_times.Maghrib }}</p></div>
+      <div class="solat-card"><h4>Isyak</h4><p>{{ solat_times.Isyak }}</p></div>
+    </div>
+  </div>
+
+ 
+  <div class="card">
+    <h2>🗓️ Jadual Tugasan Hari Ini</h2>
+    <div class="solat-grid">
+      {% for waktu, jadual in duty_by_prayer.items %}
+        <div class="solat-card">
+          <h4>{{ waktu }}</h4>
+          {% if jadual %}
+            <p><strong>Imam:</strong> {{ jadual.imam }}</p>
+            <p><strong>Muazzin:</strong> {{ jadual.muazzin }}</p>
+            <p><strong>Siak:</strong> {{ jadual.siak }}</p>
+          {% else %}
+            <p><em>Tiada tugasan</em></p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <h2>📢 Notis Khas</h2>
+    {% if notices %}
+      <ul>
+        {% for notice in notices %}
+          <li>{{ notice.content }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Tiada notis khas hari ini.</p>
+    {% endif %}
+  </div>
+
+</div>
+
+<div class="footer">
+  <h4>Hubungi Kami</h4>
+  <p>Masjid Al Mursyid Guring, Arau, Perlis</p>
+  <p>Email: imamflex@masjid.my | Tel: +60 19-518 6554</p>
+</div>
+
+
+<a href="{% url 'login' %}" class="login-btn">
+  <i class="fas fa-user-shield"></i> Log Masuk AJK
+</a>
+
+</body>
+</html>

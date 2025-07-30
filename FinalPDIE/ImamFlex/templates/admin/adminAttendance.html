@@ -1,0 +1,477 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Laporan Kehadiran AJK - ImamFlex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #0d1b2a, #1b263b);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header-img {
+            height: 250px;
+            background: url("{% static 'masjid.jpeg' %}") no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .header-img::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(13, 27, 42, 0.75);
+        }
+
+        .header-img > div {
+            z-index: 2;
+            text-align: center;
+        }
+
+        .bismillah {
+            font-family: 'Scheherazade', serif;
+            font-size: 3rem;
+            color: gold;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: #f1f1f1;
+            margin-top: 10px;
+        }
+
+         .main-wrapper {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 240px;
+            background-color: #0d1b2a;
+            padding-top: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .sidebar h2 {
+            color: gold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+.sidebar a, .dropdown-btn {
+    text-decoration: none;
+    color: white;
+    font-weight: 600; 
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    background: none;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+        .sidebar a:hover, .dropdown-btn:hover {
+            background-color: gold;
+            color: #1b1b1b;
+        }
+
+        .active {
+            background-color: gold;
+            color: #1b1b1b;
+        }
+
+        .dropdown-container {
+            display: none;
+            flex-direction: column;
+            padding-left: 30px;
+        }
+
+        .dropdown-container a {
+            font-size: 0.9rem;
+            padding: 8px 0;
+        }
+
+.dropdown-btn::after {
+    content: '\f107'; 
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-btn.active::after {
+    transform: rotate(180deg); 
+}
+
+
+        .content {
+            flex: 1;
+            padding: 30px 40px;
+        }
+        .welcome-card {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid gold;
+            border-radius: 15px;
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
+        }
+
+        .welcome-card h2 {
+            font-size: 1.8rem;
+            color: gold;
+        }
+
+        .highlight {
+            color: white;
+        }
+
+        .subtext {
+            font-size: 0.95rem;
+            color: #ccc;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropbtn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .profile-icon {
+            width: 35px;
+            height: 35px;
+            background-color: gold;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #0d1b2a;
+            font-size: 1.2rem;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color:c;
+            min-width: 150px;
+            border-radius: 10px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: gold;
+            color: #0d1b2a;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            color: gold;
+        }
+
+        .footer {
+            background-color: #0d1b2a;
+            padding: 30px 20px;
+            text-align: center;
+            color: #ccc;
+        }
+
+        .footer h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: gold;
+        }
+
+        .footer p {
+            margin: 6px 0;
+        }
+
+        .social-icons a {
+            color: gold;
+            margin: 0 10px;
+            font-size: 1.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+
+            .sidebar a, .dropdown-btn {
+                text-align: center;
+                padding: 10px;
+            }
+
+            .dropdown-container {
+                padding-left: 10px;
+            }
+        }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    th {
+      background: gold;
+      color: #0d1b2a;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(255,255,255,0.05);
+    }
+
+    .status-present {
+      color: limegreen;
+      font-weight: bold;
+    }
+
+    .status-absent {
+      color: red;
+      font-weight: bold;
+    }
+
+    select, input[type=number], button {
+      padding: 8px 12px;
+      margin-right: 10px;
+      border-radius: 8px;
+      border: none;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    select, input[type=number] {
+      background: #1b263b;
+      color: white;
+    }
+
+    button {
+      background: gold;
+      color: #0d1b2a;
+      cursor: pointer;
+    }
+
+    .print-btn {
+      background: transparent;
+      border: 1px solid gold;
+      color: gold;
+    }
+
+    .print-btn:hover {
+      background: gold;
+      color: #0d1b2a;
+    }
+  </style>
+</head>
+<body>
+
+
+<div class="header-img">
+  <div>
+    <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+    <div class="tagline">Selamat datang ke ImamFlex - Sistem Pengurusan Imam & Khutbah</div>
+  </div>
+</div>
+
+
+<div class="main-wrapper">
+
+    <div class="sidebar">
+        <h2>ImamFlex</h2>
+        <a href="{% url 'adminDash' %}" class="active"><i class="fas fa-home"></i> Home</a>
+
+        <button class="dropdown-btn"><i class="fas fa-user-tie"></i> Imam</button>
+        <div class="dropdown-container">
+            <a href="{% url 'imam_management' %}">Manage Imam</a>
+            <a href="{% url 'imam_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn"><i class="fas fa-bullhorn"></i> Muazzin</button>
+        <div class="dropdown-container">
+            <a href="{% url 'muazzin_management' %}">Manage Muazzin</a>
+            <a href="{% url 'muazzin_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn"><i class="fas fa-tools"></i> Siak</button>
+      <div class="dropdown-container" >
+        <a href="{% url 'siak_management' %}" >Manage Siak</a>
+        <a href="{% url 'siak_schedule' %}">Manage Schedule</a>
+
+      </div>
+
+       <button class="dropdown-btn"><i class="fas fa-calendar-check"></i> Leave</button>
+        <div class="dropdown-container">
+            <a href="{% url 'admin_leave_list' %}">Manage Leave</a>
+            
+        </div>
+
+      <button class="dropdown-btn"><i class="fas fa-pray"></i> Jumaat</button>
+      <div class="dropdown-container">
+        <a href="{% url 'khutbah_list' %}">Khutbah</a>
+      </div>
+
+        <button class="dropdown-btn"><i class="fas fa-chart-bar"></i> Attendance Report</button>
+        <div class="dropdown-container">
+            <a href="{% url 'attendance_report' %}">Attendance Report</a>
+        </div>
+
+       
+    </div>
+
+
+<div class="content">
+  <h2 style="color: gold; margin-bottom: 10px;">Laporan Kehadiran AJK</h2>
+  <p class="subtext" style="margin-bottom: 25px;">Bulan: {{ month_name }} {{ year }}</p>
+
+ 
+  <form method="get" action="" style="margin-bottom: 20px;">
+    <select name="staff_id">
+      <option value="">Semua AJK</option>
+      {% for s in staff_list %}
+        <option value="{{ s.role_type }}-{{ s.role_id }}" {% if s.role_type == selected_type and s.role_id == selected_id %}selected{% endif %}>
+          {{ s.role_type }} – {{ s.name }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <select name="month">
+      {% for m in month_list %}
+        <option value="{{ m }}" {% if m == month %}selected{% endif %}>{{ m }}</option>
+      {% endfor %}
+    </select>
+
+    <input type="number" name="year" value="{{ year }}" min="2020" max="2100">
+    <button type="submit">Tapis</button>
+    <button type="button" class="print-btn" onclick="print()">🖨 Cetak</button>
+  </form>
+
+ 
+  <table>
+    <thead>
+      <tr>
+        <th>Tarikh</th>
+        <th>Nama</th>
+        <th>Peranan</th>
+        <th>Waktu Solat</th>
+        <th>Status</th>
+        <th>Catatan</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in attendance_records %}
+        <tr>
+          <td>{{ r.date|date:"d/m/Y" }}</td>
+          <td>
+            {% for s in staff_list %}
+              {% if s.role_id == r.role_id and s.role_type == r.role_type %}
+                {{ s.name }}
+              {% endif %}
+            {% endfor %}
+          </td>
+          <td>{{ r.role_type }}</td>
+          <td>{{ r.prayer_time }}</td>
+          <td>
+            {% if r.attendance_status == "Present" %}
+              <span class="status-present">Hadir</span>
+            {% elif r.attendance_status == "Absent" %}
+              <span class="status-absent">Tidak Hadir</span>
+            {% else %}
+              Tidak Ditandakan
+            {% endif %}
+          </td>
+          <td>{{ r.remarks|default:"-" }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="6">Tiada data kehadiran untuk bulan ini.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+<div class="footer">
+  <h4>Hubungi Kami</h4>
+  <p>Masjid Al Mursyid Guring, No. 30, RPA Pauh (Lama), 02600 Arau, Perlis</p>
+  <p>Email: imamflex@masjid.my | Telefon: +60 19-518 6554</p>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/profile.php?id=100069456158805"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-whatsapp"></i></a>
+  </div>
+</div>
+
+<script>
+  const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+  dropdownBtns.forEach(btn => {
+    btn.addEventListener("click", function () {
+      this.classList.toggle("active");
+      const container = this.nextElementSibling;
+      container.style.display = container.style.display === "flex" ? "none" : "flex";
+    });
+  });
+</script>
+
+</body>
+</html>

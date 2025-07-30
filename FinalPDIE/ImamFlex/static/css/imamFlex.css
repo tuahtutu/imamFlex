@@ -1,0 +1,177 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #0d1b2a, #1b263b);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header-img {
+  height: 250px;
+  background: url('../masjid.jpeg') no-repeat center/cover;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-img::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 27, 42, 0.75);
+}
+
+.bismillah {
+  font-family: 'Scheherazade', serif;
+  font-size: 3rem;
+  color: gold;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+.tagline {
+  color: #f1f1f1;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.bismillah, .tagline {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+
+
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  color: gold;
+  margin-bottom: 10px;
+}
+
+.left-panel, .right-panel {
+  flex: 1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  color: white;
+}
+
+table th, td {
+  border: 1px solid gold;
+  padding: 10px;
+  text-align: left;
+}
+
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-add {
+  background: gold;
+  color: #0d1b2a;
+  text-decoration: none;
+}
+
+.btn-edit {
+  background: #3498db;
+  color: white;
+}
+
+.btn-delete {
+  background: #e74c3c;
+  color: white;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #1b263b;
+  padding: 25px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 0 10px gold;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn-cancel {
+  background: gray;
+}
+
+.footer {
+  background: #0d1b2a;
+  padding: 30px 20px;
+  text-align: center;
+  color: #ccc;
+  margin-top: auto;
+}
+
+.footer h4 {
+  color: gold;
+  margin-bottom: 10px;
+}
+
+.social-icons a {
+  color: gold;
+  margin: 0 10px;
+  font-size: 1.3rem;
+}
+
+.social-icons a:hover {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .main-wrapper {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .sidebar a, .dropdown-btn {
+    padding: 10px;
+  }
+
+  .dropdown-container {
+    padding-left: 10px;
+  }
+}

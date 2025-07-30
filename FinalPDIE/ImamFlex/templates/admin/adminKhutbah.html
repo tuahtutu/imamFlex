@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jumaat Khutbah - ImamFlex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/ImamFlex.css' %}">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0d1b2a, #1b263b);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header-img {
+      height: 250px;
+      background: url("{% static 'masjid.jpeg' %}") no-repeat center/cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-img::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(13,27,42,0.75);
+    }
+    .bismillah {
+      font-family: 'Scheherazade', serif;
+      font-size: 3rem;
+      color: gold;
+      z-index: 2;
+    }
+    .tagline {
+      z-index: 2;
+      color: #f1f1f1;
+      margin-top: 10px;
+    }
+  .main-wrapper { display:flex; flex:1; }
+    .sidebar { width:240px; background:#0d1b2a; padding-top:30px; display:flex; flex-direction:column; box-shadow:4px 0 10px rgba(0,0,0,0.3); }
+    .sidebar h2 { color:gold; text-align:center; margin-bottom:20px; }
+    .sidebar a, .dropdown-btn { text-decoration:none; color:white; font-weight:600; padding:12px 20px; font-size:0.95rem; border:none; background:none; width:100%; display:flex; align-items:center; gap:10px; cursor:pointer; transition:background 0.3s;color:white; font-family:'Poppins',sans-serif; }
+    .sidebar a:hover, .dropdown-btn:hover { background:gold; color:#1b1b1b; }
+    .active { background:gold; color:#1b1b1b; }
+    .dropdown-btn::after { content:'\f107'; font-family:'Font Awesome 5 Free'; font-weight:900; margin-left:auto; transition:transform 0.3s; }
+    .dropdown-btn.active::after { transform:rotate(180deg); }
+    .dropdown-container { display:none; flex-direction:column; padding-left:30px; }
+    .dropdown-container a { font-size:0.9rem; padding:8px 0; }
+    .content { flex:1; padding:30px 40px; display:flex; gap:25px; flex-direction:column; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid gold;
+      text-align: left;
+    }
+    th {
+      background-color: #14213d;
+      color: gold;
+    }
+    tr:nth-child(even) {
+      background-color: rgba(255,255,255,0.03);
+    }
+    .add-btn {
+      padding: 10px 18px;
+      background-color: gold;
+      color: #0d1b2a;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .btn-action {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-right: 8px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-approve {
+  background-color: gold;
+  color: #0d1b2a;
+}
+
+.btn-approve:hover {
+  background-color: #ffd700;
+  color: #1b263b;
+}
+
+.btn-reject {
+  background-color: darkred;
+  color: white;
+}
+
+.btn-reject:hover {
+  background-color: #a30000;
+  color: #fff;
+}
+
+    .footer {
+      background: #0d1b2a;
+      padding: 30px 20px;
+      text-align: center;
+      color: #ccc;
+    }
+    .footer h4 {
+      color: gold;
+      margin-bottom: 10px;
+    }
+    .social-icons a {
+      color: gold;
+      margin: 0 10px;
+      font-size: 1.3rem;
+    }
+  </style>
+</head>
+<body>
+<div class="header-img">
+  <div>
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <div class="tagline">Selamat datang ke ImamFlex - Sistem Pengurusan Imam & Khutbah</div>
+  </div>
+</div>
+<div class="main-wrapper">
+
+    <div class="sidebar">
+        <h2>ImamFlex</h2>
+        <a href="{% url 'adminDash' %}" class="active"><i class="fas fa-home"></i> Home</a>
+
+        <button class="dropdown-btn"><i class="fas fa-user-tie"></i> Imam</button>
+        <div class="dropdown-container">
+            <a href="{% url 'imam_management' %}">Manage Imam</a>
+            <a href="{% url 'imam_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn"><i class="fas fa-bullhorn"></i> Muazzin</button>
+        <div class="dropdown-container">
+            <a href="{% url 'muazzin_management' %}">Manage Muazzin</a>
+            <a href="{% url 'muazzin_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn"><i class="fas fa-tools"></i> Siak</button>
+      <div class="dropdown-container" >
+        <a href="{% url 'siak_management' %}" >Manage Siak</a>
+        <a href="{% url 'siak_schedule' %}">Manage Schedule</a>
+
+      </div>
+
+       <button class="dropdown-btn"><i class="fas fa-calendar-check"></i> Leave</button>
+        <div class="dropdown-container">
+            <a href="{% url 'admin_leave_list' %}">Manage Leave</a>
+            
+        </div>
+
+      <button class="dropdown-btn active"><i class="fas fa-pray"></i> Jumaat</button>
+      <div class="dropdown-container" style="display:flex;">
+        <a href="{% url 'khutbah_list' %}">Khutbah</a>
+      </div>
+
+      <button class="dropdown-btn"><i class="fas fa-chart-bar"></i> Attendance Report</button>
+        <div class="dropdown-container">
+            <a href="{% url 'attendance_report' %}">Attendance Report</a>
+        </div>
+
+
+       
+    </div>
+  <div class="content">
+    <h2>Senarai Khutbah Jumaat</h2>
+    <a href="{% url 'add_khutbah' %}" class="add-btn">+ Tambah Khutbah</a>
+    <table>
+      <thead>
+        <tr>
+          <th>Tarikh</th>
+          <th>Tajuk</th>
+          <th>Khatib</th>
+          <th>Tindakan</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for khutbah in khutbahs %}
+        <tr>
+          <td>{{ khutbah.date }}</td>
+          <td>{{ khutbah.khutbah_topic }}</td>
+          <td>{{ khutbah.khatib.name }}</td>
+          <td>
+            <a href="{% url 'edit_khutbah' khutbah.khutbah_id %}" class="btn-action btn-approve">Edit</a>
+            <a href="{% url 'delete_khutbah' khutbah.khutbah_id %}" class="btn-action btn-reject" onclick="return confirm('Padam khutbah ini?')">Padam</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">Tiada khutbah didaftarkan.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="footer">
+  <h4>Hubungi Kami</h4>
+  <p>Masjid Al Mursyid Guring, No. 30, RPA Pauh(Lama), 02600 Arau, Perlis</p>
+  <p>Email: imamflex@masjid.my | Telefon: +60 19-518 6554</p>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/profile.php?id=100069456158805"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-whatsapp"></i></a>
+  </div>
+</div>
+<script>
+  const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+  dropdownBtns.forEach(btn => {
+    btn.addEventListener("click", function () {
+      this.classList.toggle("active");
+      const container = this.nextElementSibling;
+      container.style.display = container.style.display === "flex" ? "none" : "flex";
+    });
+  });
+</script>
+</body>
+</html>

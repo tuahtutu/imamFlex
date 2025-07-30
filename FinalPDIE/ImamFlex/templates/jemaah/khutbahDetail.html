@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Butiran Khutbah - ImamFlex</title>
+  <link rel="stylesheet" href="{% static 'css/ImamFlex.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      background-color: #0d1b2a;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      padding: 0;
+      margin: 0;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      padding: 30px 0 10px;
+      background: #0d1b2a;
+    }
+
+    .back-btn, .print-btn {
+      background: gold;
+      color: #0d1b2a;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover, .print-btn:hover {
+      background-color: #ffdb4d;
+      transform: translateY(-2px);
+    }
+
+    .khutbah-detail {
+      background-color: #1b263b;
+      border-left: 8px solid gold;
+      padding: 40px 50px;
+      border-radius: 12px;
+      max-width: 850px;
+      margin: 0 auto 60px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    }
+
+    h1, h3 {
+      color: gold;
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin: 10px 0;
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    hr {
+      border: 0;
+      border-top: 2px solid gold;
+      margin: 30px 0;
+    }
+
+    @media print {
+      body {
+        background: white;
+        color: black;
+        font-size: 14px;
+      }
+      .button-row {
+        display: none;
+      }
+      .khutbah-detail {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="button-row">
+    <a href="{% url 'jemaah_khutbah' %}" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Kembali
+    </a>
+    <button onclick="window.print()" class="print-btn">
+      <i class="fas fa-print"></i> Cetak
+    </button>
+  </div>
+
+  <div class="khutbah-detail">
+    <h1>{{ khutbah.khutbah_topic }}</h1>
+    <p><strong>Tarikh:</strong> {{ khutbah.date|date:"j F Y" }}</p>
+    <p><strong>Jenis Acara:</strong> {{ khutbah.event_type }}</p>
+    <p><strong>Khatib:</strong>
+      {% if khutbah.khatib %}
+        {{ khutbah.khatib.name }}
+      {% else %}
+        Belum Ditentukan
+      {% endif %}
+    </p>
+
+    <hr>
+
+    <h3>Kandungan Khutbah:</h3>
+    <p style="white-space: pre-line;">{{ khutbah.content }}</p>
+  </div>
+
+</body>
+</html>
