@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get(
 # Production (PythonAnywhere): set env var  DJANGO_DEBUG=False
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-# Production (Render/PythonAnywhere): set env var  DJANGO_ALLOWED_HOSTS=domain-anda
+# Production (Render/PythonAnywhere): set env var DJANGO_ALLOWED_HOSTS=domain-anda
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(',') if h.strip()]
 
 # Render auto-set env var ni — domain .onrender.com dibenarkan secara automatik
@@ -43,7 +43,6 @@ CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.environ.get('CSRF_TRUSTED_ORIGINS'
 
 # Render berada di belakang reverse proxy https
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
 
 # Application definition
 
