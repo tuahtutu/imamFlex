@@ -1,0 +1,282 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kehadiran Siak - ImamFlex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0d1b2a, #1b263b);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .header-img {
+      height: 200px;
+      background: url("{% static 'masjid.jpeg' %}") no-repeat center/cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-img::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(13,27,42,0.75);
+    }
+    .bismillah, .tagline {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .bismillah {
+      font-family: 'Scheherazade', serif;
+      font-size: 3rem;
+      color: gold;
+    }
+    .tagline {
+      color: #f1f1f1;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+    .main-wrapper {
+      display: flex;
+      flex: 1;
+    }
+    .sidebar {
+      width: 220px;
+      background: #0d1b2a;
+      padding-top: 30px;
+      box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+    }
+    .sidebar h2 {
+      color: gold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .sidebar a:hover, .sidebar a.active {
+      background-color: gold;
+      color: #1b263b;
+    }
+    .content {
+      flex: 1;
+      padding: 30px 40px;
+    }
+    .content h2 {
+      color: gold;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+    }
+    th {
+      background-color: gold;
+      color: #1b263b;
+    }
+    tr:nth-child(even) {
+      background-color: rgba(255,255,255,0.05);
+    }
+    tr:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+    .status-present {
+      color: limegreen;
+      font-weight: bold;
+    }
+    .status-absent {
+      color: red;
+      font-weight: bold;
+    }
+    .action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      padding: 6px 10px;
+    }
+    .btn-hadir { color: limegreen; }
+    .btn-tak { color: red; }
+    #reasonModal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+    }
+    .modal-content {
+      background: #1b263b;
+      color: white;
+      padding: 30px;
+      width: 90%;
+      max-width: 500px;
+      margin: 10% auto;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255,215,0,0.4);
+      border: 1px solid gold;
+    }
+    .modal-content h3 {
+      color: gold;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    .modal-content textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #888;
+      resize: vertical;
+      background-color: #0d1b2a;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+    }
+    .modal-content button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+    }
+    .btn-submit {
+      background: gold;
+      color: #0d1b2a;
+    }
+    .btn-cancel {
+      background: #ccc;
+      color: #1b263b;
+      margin-left: 10px;
+    }
+    .footer {
+      background: #0d1b2a;
+      padding: 20px;
+      text-align: center;
+      color: #ccc;
+      margin-top: auto;
+    }
+    .footer h4 {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header-img">
+  <div>
+    <div class="bismillah">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <div class="tagline">Rekod Kehadiran Saya - Siak</div>
+  </div>
+</div>
+
+<div class="main-wrapper">
+  <div class="sidebar">
+    <h2>ImamFlex</h2>
+    <a href="{% url 'siakDash' %}">Home</a>
+    <a href="{% url 'siak_schedule_side' %}">My Schedule</a>
+    <a href="{% url 'siak_leave_history' %}">My Leave's Application</a>
+    <a href="{% url 'siak_attendance' %}" class="active">My Attendance</a>
+  </div>
+
+  <div class="content">
+    <h2>Rekod Kehadiran - {{ month_name }} {{ year }}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Tarikh</th>
+          <th>Waktu Solat</th>
+          <th>Status Semasa</th>
+          <th>Kemaskini</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in attendance_records %}
+        <tr>
+          <td>{{ record.date|date:"d/m/Y" }}</td>
+          <td>{{ record.prayer_time }}</td>
+          <td>
+            {% if record.attendance_status == "Present" %}
+              <span class="status-present">Hadir</span>
+            {% elif record.attendance_status == "Absent" %}
+              <span class="status-absent">Tidak Hadir</span>
+            {% else %}
+              Belum Ditandakan
+            {% endif %}
+          </td>
+          <td>
+            <form method="post" action="{% url 'mark_attendance_siak' %}" style="display:inline;">
+
+              {% csrf_token %}
+              <input type="hidden" name="attendance_id" value="{{ record.attendance_id }}">
+              <button type="submit" name="status" value="Present" class="action-btn btn-hadir">Hadir</button>
+            </form>
+            <button type="button" onclick="openReasonModal('{{ record.attendance_id }}')" class="action-btn btn-tak">Tidak Hadir</button>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">Tiada rekod kehadiran untuk bulan ini.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div id="reasonModal">
+  <div class="modal-content">
+    <h3>Sebab Tidak Hadir</h3>
+    <form method="post" action="{% url 'mark_attendance_siak' %}">
+
+      {% csrf_token %}
+      <input type="hidden" id="modal-attendance-id" name="attendance_id">
+      <input type="hidden" name="status" value="Absent">
+      <textarea name="remarks" rows="4" required placeholder="Contoh: Urusan keluarga, kesihatan..."></textarea>
+      <br>
+      <button type="submit" class="btn-submit">Hantar</button>
+      <button type="button" onclick="closeReasonModal()" class="btn-cancel">Batal</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openReasonModal(id) {
+    document.getElementById("modal-attendance-id").value = id;
+    document.getElementById("reasonModal").style.display = "block";
+  }
+  function closeReasonModal() {
+    document.getElementById("reasonModal").style.display = "none";
+  }
+</script>
+
+<div class="footer">
+  <h4>Hubungi Kami</h4>
+  <p>Masjid Al Mursyid Guring, Arau, Perlis</p>
+  <p>Email: imamflex@masjid.my | Tel: +60 19-518 6554</p>
+</div>
+
+</body>
+</html>

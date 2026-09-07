@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Muazzin Management - ImamFlex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/imamFlex.css' %}">
+<style>
+   .main-wrapper {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 240px;
+            background-color: #0d1b2a;
+            padding-top: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .sidebar h2 {
+            color: gold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+.sidebar a, .dropdown-btn {
+    text-decoration: none;
+    color: white;
+    font-weight: 600; 
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    background: none;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+        .sidebar a:hover, .dropdown-btn:hover {
+            background-color: gold;
+            color: #1b1b1b;
+        }
+
+        .active {
+            background-color: gold;
+            color: #1b1b1b;
+        }
+
+        .dropdown-container {
+            display: none;
+            flex-direction: column;
+            padding-left: 30px;
+        }
+
+        .dropdown-container a {
+            font-size: 0.9rem;
+            padding: 8px 0;
+        }
+
+.dropdown-btn::after {
+    content: '\f107'; 
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-btn.active::after {
+    transform: rotate(180deg); 
+}
+
+
+        .content {
+            flex: 1;
+            padding: 30px 40px;
+        }
+
+ @media(max-width:768px){ .main-wrapper{ flex-direction:column;} .sidebar{ width:100%; flex-direction:row; flex-wrap:wrap; justify-content:space-around;} .sidebar a,.dropdown-btn{ padding:10px;} .dropdown-container{ padding-left:10px;} }
+</style>
+</head>
+<body>
+
+
+  <div class="header-img">
+    <div>
+      <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+      <div class="tagline">Selamat datang ke ImamFlex - Urus Muazzin & Jadual</div>
+    </div>
+  </div>
+
+  <div class="main-wrapper">
+    <div class="sidebar">
+        <h2>ImamFlex</h2>
+        <a href="{% url 'adminDash' %}" class="active"><i class="fas fa-home"></i> Home</a>
+
+        <button class="dropdown-btn"><i class="fas fa-user-tie"></i> Imam</button>
+        <div class="dropdown-container">
+            <a href="{% url 'imam_management' %}">Manage Imam</a>
+            <a href="{% url 'imam_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn active"><i class="fas fa-bullhorn"></i> Muazzin</button>
+        <div class="dropdown-container" style="display:flex;">
+            <a href="{% url 'muazzin_management' %}">Manage Muazzin</a>
+            <a href="{% url 'muazzin_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn"><i class="fas fa-tools"></i> Siak</button>
+      <div class="dropdown-container" >
+        <a href="{% url 'siak_management' %}" >Manage Siak</a>
+        <a href="{% url 'siak_schedule' %}">Manage Schedule</a>
+
+      </div>
+
+       <button class="dropdown-btn"><i class="fas fa-calendar-check"></i> Leave</button>
+        <div class="dropdown-container">
+            <a href="{% url 'admin_leave_list' %}">Manage Leave</a>
+            
+        </div>
+
+      <button class="dropdown-btn"><i class="fas fa-pray"></i> Jumaat</button>
+      <div class="dropdown-container">
+        <a href="{% url 'khutbah_list' %}">Khutbah</a>
+      </div>
+
+      <button class="dropdown-btn"><i class="fas fa-chart-bar"></i> Attendance Report</button>
+        <div class="dropdown-container">
+            <a href="{% url 'attendance_report' %}">Attendance Report</a>
+        </div>
+
+       
+    </div>
+
+    <div class="content">
+      <div class="card left-panel">
+        <h3>Muazzin Schedule Preview</h3>
+        <p>(Calendar view placeholder here)</p>
+      </div>
+
+      <div class="card right-panel">
+        <h3>Muazzin List Management</h3>
+        <a href="{% url 'add_muazzin' %}" class="btn btn-add">+ Tambah Muazzin</a>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nama</th>
+              <th>No IC</th>
+              <th>No Telefon</th>
+              <th>Alamat</th>
+              <th>Tindakan</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for muazzin in muazzins %}
+              <tr>
+                <td>{{ muazzin.muazzin_id }}</td>
+                <td>{{ muazzin.name }}</td>
+                <td>{{ muazzin.ic_number }}</td>
+                <td>{{ muazzin.contact_number }}</td>
+                <td>{{ muazzin.address }}</td>
+                <td>
+                  <a href="{% url 'edit_muazzin' muazzin.muazzin_id %}" class="btn btn-edit">Edit</a>
+                  <button class="btn btn-delete" onclick="showDeleteModal('{{ muazzin.muazzin_id }}', '{{ muazzin.name }}')">Delete</button>
+                </td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="6">Tiada data muazzin tersedia.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <p id="modalMessage">Awak pasti nak delete?</p>
+      <div class="modal-buttons">
+        <form method="POST" id="deleteForm">{% csrf_token %}
+          <button type="submit" class="btn btn-delete">Ya, Delete</button>
+        </form>
+        <button class="btn btn-cancel" onclick="hideDeleteModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="footer">
+    <h4>Hubungi Kami</h4>
+    <p>Masjid Al Mursyid Guring,No. 30, Rpa Pauh(Lama),02600 Arau,Perlis,</p>
+    <p>Email: imamflex@masjid.my | Telefon: +60 19-518 6554</p>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/profile.php?id=100069456158805"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+
+  <script>
+    function showDeleteModal(id, name) {
+      document.getElementById('modalMessage').innerText = `Awak pasti nak delete ${id} - ${name}?`;
+      document.getElementById('deleteForm').action = `/delete_muazzin/${id}/`;
+      document.getElementById('deleteModal').style.display = 'flex';
+    }
+
+    function hideDeleteModal() {
+      document.getElementById('deleteModal').style.display = 'none';
+    }
+
+    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        const cont = btn.nextElementSibling;
+        cont.style.display = (cont.style.display === 'flex' ? 'none' : 'flex');
+      });
+    });
+  </script>
+
+</body>
+</html>

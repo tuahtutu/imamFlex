@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Permohonan Cuti Saya - ImamFlex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0d1b2a, #1b263b);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .header-img {
+      height: 200px;
+      background: url("{% static 'masjid.jpeg' %}") no-repeat center/cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-img::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(13,27,42,0.75);
+    }
+    .bismillah, .tagline {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .bismillah {
+      font-family: 'Scheherazade', serif;
+      font-size: 3rem;
+      color: gold;
+    }
+    .tagline {
+      color: #f1f1f1;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+    .main-wrapper {
+      display: flex;
+      flex: 1;
+    }
+    .sidebar {
+      width: 220px;
+      background: #0d1b2a;
+      padding-top: 30px;
+      box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+    }
+    .sidebar h2 {
+      color: gold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .sidebar a:hover, .sidebar a.active {
+      background-color: gold;
+      color: #1b263b;
+    }
+    .content {
+      flex: 1;
+      padding: 30px 40px;
+    }
+    .content h2 {
+      color: gold;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 15px;
+      border-bottom: 1px solid gold;
+      text-align: left;
+    }
+    th {
+      color: gold;
+      background: #1b263b;
+    }
+    td a {
+      color: #4fc3f7;
+      text-decoration: underline;
+    }
+    .status-pending {
+      color: orange;
+    }
+    .status-approved {
+      color: lightgreen;
+    }
+    .status-rejected {
+      color: red;
+    }
+    .footer {
+      background: #0d1b2a;
+      padding: 20px;
+      text-align: center;
+      color: #ccc;
+      margin-top: auto;
+    }
+    .footer h4 {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+<div class="header-img">
+  <div>
+    <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</div>
+    <div class="tagline">Permohonan Cuti Saya</div>
+  </div>
+</div>
+<div class="main-wrapper">
+
+  <div class="sidebar">
+    <h2>ImamFlex</h2>
+    <a href="{% url 'muazzinDash' %}">Home</a>
+    <a href="{% url 'muazzin_schedule_side' %}">My Schedule</a>
+    <a href="{% url 'muazzin_leave_history' %}" class="active">My Leave's Application</a>
+    <a href="{% url 'muazzin_attendance' %}">My Attendance</a>
+  </div>
+
+  <div class="content">
+    <h2>Senarai Permohonan Cuti</h2>
+    {% if leave_requests %}
+    <table>
+      <thead>
+        <tr>
+          <th>Tarikh</th>
+          <th>Sebab</th>
+          <th>Waktu Solat</th>
+          <th>Dokumen</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for leave in leave_requests %}
+        <tr>
+          <td>{{ leave.start_date|date:"d M Y" }}</td>
+          <td>{{ leave.reason }}</td>
+          <td>{{ leave.prayer_time }}</td>
+          <td>
+            {% if leave.supporting_document %}
+              <a href="{{ leave.supporting_document.url }}" target="_blank">Lihat Fail</a>
+            {% else %}
+              Tiada
+            {% endif %}
+          </td>
+          <td class="status-{{ leave.approval_status|lower }}">{{ leave.approval_status }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>Tiada permohonan cuti direkodkan setakat ini.</p>
+    {% endif %}
+  </div>
+</div>
+<div class="footer">
+  <h4>Hubungi Kami</h4>
+  <p>Masjid Al Mursyid Guring, Arau, Perlis</p>
+  <p>Email: imamflex@masjid.my | Tel: +60 19-518 6554</p>
+</div>
+</body>
+</html>

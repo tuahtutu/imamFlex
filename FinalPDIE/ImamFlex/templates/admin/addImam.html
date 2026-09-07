@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tambah Imam - ImamFlex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2d9b6cfcb.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      background: linear-gradient(to right, #0d1b2a, #1b263b);
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      padding: 40px;
+    }
+
+    .form-container {
+      background-color: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px gold;
+    }
+
+    h2 {
+      color: gold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: gold;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-weight: bold;
+      background-color: gold;
+      color: #0d1b2a;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background-color: white;
+      color: #0d1b2a;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: gold;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Tambah Imam Baru</h2>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="imam_id">ID Imam</label>
+        <input type="text" id="imam_id" name="imam_id" required>
+      </div>
+      <div class="form-group">
+        <label for="name">Nama</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="ic_number">No IC</label>
+        <input type="text" id="ic_number" name="ic_number" required>
+      </div>
+      <div class="form-group">
+        <label for="contact_number">No Telefon</label>
+        <input type="text" id="contact_number" name="contact_number" required>
+      </div>
+      <div class="form-group">
+        <label for="Email">E-mail</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="address">Alamat</label>
+        <textarea id="address" name="address" rows="3" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="password">Kata Laluan</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn">Simpan Imam</button>
+    </form>
+    <a href="{% url 'imam_management' %}" class="back-link"><i class="fas fa-arrow-left"></i> Kembali ke Imam Management</a>
+  </div>
+</body>
+</html>
