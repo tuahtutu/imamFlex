@@ -1,0 +1,19 @@
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Output collectstatic (dijana semula dengan: python manage.py collectstatic)
+staticroot/
+
+# Fail upload pengguna - buang baris ni jika mahu simpan upload dalam git
+media/
+
+# Log
+*.log
+
+# Nota: db.sqlite3 sengaja TAK diabaikan supaya data demo ikut ke server.
+# Untuk production sebenar, tambah baris ini:
+# db.sqlite3
