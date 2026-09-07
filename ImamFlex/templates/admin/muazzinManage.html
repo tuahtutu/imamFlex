@@ -6,11 +6,91 @@
   <title>Muazzin Management - ImamFlex</title>
   <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link rel="stylesheet" href="{% static 'css/ImamFlex.css' %}">
+  <link rel="stylesheet" href="{% static 'css/imamFlex.css' %}">
+<style>
+   .main-wrapper {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 240px;
+            background-color: #0d1b2a;
+            padding-top: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .sidebar h2 {
+            color: gold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+.sidebar a, .dropdown-btn {
+    text-decoration: none;
+    color: white;
+    font-weight: 600; 
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    background: none;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+        .sidebar a:hover, .dropdown-btn:hover {
+            background-color: gold;
+            color: #1b1b1b;
+        }
+
+        .active {
+            background-color: gold;
+            color: #1b1b1b;
+        }
+
+        .dropdown-container {
+            display: none;
+            flex-direction: column;
+            padding-left: 30px;
+        }
+
+        .dropdown-container a {
+            font-size: 0.9rem;
+            padding: 8px 0;
+        }
+
+.dropdown-btn::after {
+    content: '\f107'; 
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-btn.active::after {
+    transform: rotate(180deg); 
+}
+
+
+        .content {
+            flex: 1;
+            padding: 30px 40px;
+        }
+
+ @media(max-width:768px){ .main-wrapper{ flex-direction:column;} .sidebar{ width:100%; flex-direction:row; flex-wrap:wrap; justify-content:space-around;} .sidebar a,.dropdown-btn{ padding:10px;} .dropdown-container{ padding-left:10px;} }
+</style>
 </head>
 <body>
 
-  <!-- Header -->
+
   <div class="header-img">
     <div>
       <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
@@ -20,38 +100,49 @@
 
   <div class="main-wrapper">
     <div class="sidebar">
-      <h2>ImamFlex</h2>
-      <a href="{% url 'adminDash' %}"><i class="fas fa-home"></i> Home</a>
+        <h2>ImamFlex</h2>
+        <a href="{% url 'adminDash' %}" class="active"><i class="fas fa-home"></i> Home</a>
 
-      <button class="dropdown-btn"><i class="fas fa-user-tie"></i> Imam</button>
+        <button class="dropdown-btn"><i class="fas fa-user-tie"></i> Imam</button>
+        <div class="dropdown-container">
+            <a href="{% url 'imam_management' %}">Manage Imam</a>
+            <a href="{% url 'imam_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn active"><i class="fas fa-bullhorn"></i> Muazzin</button>
+        <div class="dropdown-container" style="display:flex;">
+            <a href="{% url 'muazzin_management' %}">Manage Muazzin</a>
+            <a href="{% url 'muazzin_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn"><i class="fas fa-tools"></i> Siak</button>
       <div class="dropdown-container" >
-        <a href="{% url 'imam_management' %}">Manage Imam</a>
-        <a href="#">Manage Schedule</a>
-        <a href="#">Manage Leave</a>
+        <a href="{% url 'siak_management' %}" >Manage Siak</a>
+        <a href="{% url 'siak_schedule' %}">Manage Schedule</a>
+
       </div>
 
-      <button class="dropdown-btn active"><i class="fas fa-bullhorn"></i> Muazzin</button>
-      <div class="dropdown-container"style="display:flex;">
-        <a href="{% url 'muazzin_management' %}"class="active">Manage Muazzin</a>
-        <a href="#">Manage Schedule</a>
-        <a href="#">Manage Leave</a>
-      </div>
-
-      <button class="dropdown-btn"><i class="fas fa-tools"></i> Siak</button>
-      <div class="dropdown-container">
-        <a href="#">Manage Siak</a>
-        <a href="#">Manage Schedule</a>
-        <a href="#">Manage Leave</a>
-      </div>
+       <button class="dropdown-btn"><i class="fas fa-calendar-check"></i> Leave</button>
+        <div class="dropdown-container">
+            <a href="{% url 'admin_leave_list' %}">Manage Leave</a>
+            
+        </div>
 
       <button class="dropdown-btn"><i class="fas fa-pray"></i> Jumaat</button>
       <div class="dropdown-container">
-        <a href="#">Placeholder 1</a>
+        <a href="{% url 'khutbah_list' %}">Khutbah</a>
       </div>
 
-      
+      <button class="dropdown-btn"><i class="fas fa-chart-bar"></i> Attendance Report</button>
+        <div class="dropdown-container">
+            <a href="{% url 'attendance_report' %}">Attendance Report</a>
+        </div>
+
+       
     </div>
-    <!-- Content -->
+
     <div class="content">
       <div class="card left-panel">
         <h3>Muazzin Schedule Preview</h3>
@@ -94,7 +185,7 @@
     </div>
   </div>
 
-  <!-- Delete Modal -->
+
   <div id="deleteModal" class="modal">
     <div class="modal-content">
       <p id="modalMessage">Awak pasti nak delete?</p>
@@ -107,7 +198,7 @@
     </div>
   </div>
 
-  <!-- Footer -->
+
   <div class="footer">
     <h4>Hubungi Kami</h4>
     <p>Masjid Al Mursyid Guring,No. 30, Rpa Pauh(Lama),02600 Arau,Perlis,</p>

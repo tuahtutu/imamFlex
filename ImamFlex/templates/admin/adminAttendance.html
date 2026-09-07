@@ -1,15 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard - ImamFlex</title>
-    <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Laporan Kehadiran AJK - ImamFlex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <style>
-        body {
+  <style>
+    body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(to right, #0d1b2a, #1b263b);
@@ -53,7 +52,7 @@
             margin-top: 10px;
         }
 
-        .main-wrapper {
+         .main-wrapper {
             display: flex;
             flex: 1;
         }
@@ -129,7 +128,6 @@
             flex: 1;
             padding: 30px 40px;
         }
-
         .welcome-card {
             background: rgba(255, 215, 0, 0.1);
             border: 1px solid gold;
@@ -260,17 +258,81 @@
                 padding-left: 10px;
             }
         }
-    </style>
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    th {
+      background: gold;
+      color: #0d1b2a;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(255,255,255,0.05);
+    }
+
+    .status-present {
+      color: limegreen;
+      font-weight: bold;
+    }
+
+    .status-absent {
+      color: red;
+      font-weight: bold;
+    }
+
+    select, input[type=number], button {
+      padding: 8px 12px;
+      margin-right: 10px;
+      border-radius: 8px;
+      border: none;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    select, input[type=number] {
+      background: #1b263b;
+      color: white;
+    }
+
+    button {
+      background: gold;
+      color: #0d1b2a;
+      cursor: pointer;
+    }
+
+    .print-btn {
+      background: transparent;
+      border: 1px solid gold;
+      color: gold;
+    }
+
+    .print-btn:hover {
+      background: gold;
+      color: #0d1b2a;
+    }
+  </style>
 </head>
 <body>
 
 
 <div class="header-img">
-    <div>
-        <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-        <div class="tagline">Selamat datang ke ImamFlex - Sistem Pengurusan Imam & Khutbah</div>
-    </div>
+  <div>
+    <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+    <div class="tagline">Selamat datang ke ImamFlex - Sistem Pengurusan Imam & Khutbah</div>
+  </div>
 </div>
+
 
 <div class="main-wrapper">
 
@@ -310,165 +372,105 @@
         <a href="{% url 'khutbah_list' %}">Khutbah</a>
       </div>
 
-      <button class="dropdown-btn"><i class="fas fa-chart-bar"></i> Attendance Report</button>
+        <button class="dropdown-btn"><i class="fas fa-chart-bar"></i> Attendance Report</button>
         <div class="dropdown-container">
             <a href="{% url 'attendance_report' %}">Attendance Report</a>
-            
-            
         </div>
 
        
     </div>
 
 
-    <div class="content">
-        <div class="welcome-card">
-            <div>
-                <h2>Welcome, <span class="highlight">Admin</span></h2>
-                <p class="subtext">Selamat menjalankan tugas mulia!</p>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">
-                    <div class="profile-icon"><i class="fas fa-user"></i></div>
-                </button>
-                <div class="dropdown-content">
-                    <a href="#" onclick="openLogoutModal()"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                </div>
-            </div>
-        </div>
-        <div style="text-align:right; margin-bottom: 20px;">
-  <form method="POST" action="{% url 'send_manual_reminder' %}">
-    {% csrf_token %}
-    <button type="submit" style="background:gold; color:#0d1b2a; padding:10px 18px; font-weight:bold; border-radius:6px; border:none; cursor:pointer;">
-      📤 Hantar Peringatan Tugas Hari Ini
-    </button>
+<div class="content">
+  <h2 style="color: gold; margin-bottom: 10px;">Laporan Kehadiran AJK</h2>
+  <p class="subtext" style="margin-bottom: 25px;">Bulan: {{ month_name }} {{ year }}</p>
+
+ 
+  <form method="get" action="" style="margin-bottom: 20px;">
+    <select name="staff_id">
+      <option value="">Semua AJK</option>
+      {% for s in staff_list %}
+        <option value="{{ s.role_type }}-{{ s.role_id }}" {% if s.role_type == selected_type and s.role_id == selected_id %}selected{% endif %}>
+          {{ s.role_type }} – {{ s.name }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <select name="month">
+      {% for m in month_list %}
+        <option value="{{ m }}" {% if m == month %}selected{% endif %}>{{ m }}</option>
+      {% endfor %}
+    </select>
+
+    <input type="number" name="year" value="{{ year }}" min="2020" max="2100">
+    <button type="submit">Tapis</button>
+    <button type="button" class="print-btn" onclick="print()">🖨 Cetak</button>
   </form>
-</div>
 
-
-       
-<div class="card">
-  <h3>Imam Schedule Hari Ini</h3>
-  {% if imam_schedule_today %}
-    <ul>
-      {% for duty in imam_schedule_today %}
-        <li>
-  {{ duty.prayer_time }} – 
-  {% for imam in imams %}
-    {% if imam.imam_id == duty.role_id %}
-      {{ imam.name }}
-    {% endif %}
-  {% endfor %}
-</li>
-
+ 
+  <table>
+    <thead>
+      <tr>
+        <th>Tarikh</th>
+        <th>Nama</th>
+        <th>Peranan</th>
+        <th>Waktu Solat</th>
+        <th>Status</th>
+        <th>Catatan</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in attendance_records %}
+        <tr>
+          <td>{{ r.date|date:"d/m/Y" }}</td>
+          <td>
+            {% for s in staff_list %}
+              {% if s.role_id == r.role_id and s.role_type == r.role_type %}
+                {{ s.name }}
+              {% endif %}
+            {% endfor %}
+          </td>
+          <td>{{ r.role_type }}</td>
+          <td>{{ r.prayer_time }}</td>
+          <td>
+            {% if r.attendance_status == "Present" %}
+              <span class="status-present">Hadir</span>
+            {% elif r.attendance_status == "Absent" %}
+              <span class="status-absent">Tidak Hadir</span>
+            {% else %}
+              Tidak Ditandakan
+            {% endif %}
+          </td>
+          <td>{{ r.remarks|default:"-" }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="6">Tiada data kehadiran untuk bulan ini.</td></tr>
       {% endfor %}
-    </ul>
-  {% else %}
-    <p>Tiada tugasan imam hari ini.</p>
-  {% endif %}
+    </tbody>
+  </table>
+</div>
 </div>
 
 
-<div class="card">
-  <h3>Topik Khutbah Terkini</h3>
-  {% if latest_khutbah %}
-    <p><strong>Tarikh:</strong> {{ latest_khutbah.date }}</p>
-    <p><strong>Topik:</strong> {{ latest_khutbah.khutbah_topic }}</p>
-    
-  {% else %}
-    <p>Tiada rekod khutbah terkini.</p>
-  {% endif %}
-</div>
-
-
-<div class="card">
-  <h3>Jadual Khutbah Jumaat Seterusnya</h3>
-  {% if next_jumaat_khutbah %}
-    <p><strong>Tarikh:</strong> {{ next_jumaat_khutbah.date }}</p>
-    <p><strong>Topik:</strong> {{ next_jumaat_khutbah.khutbah_topic }}</p>
-  {% else %}
-    <p>Tiada khutbah Jumaat akan datang direkodkan.</p>
-  {% endif %}
-</div>
-
-
-<div class="card">
-  <h3>Permohonan Cuti Belum Lulus</h3>
-  {% if pending_leaves %}
-    <ul>
-      {% for leave in pending_leaves|slice:":3" %}
-        <li>{{ leave.roleType }} – {{ leave.roleID.name }} ({{ leave.startDate }} hingga {{ leave.endDate }})</li>
-      {% endfor %}
-    </ul>
-    <p><em>{{ pending_leaves.count }} permohonan belum diluluskan</em></p>
-  {% else %}
-    <p>Tiada permohonan cuti tertunggak.</p>
-  {% endif %}
-</div>
-
-
-<div class="card">
-  <h3>Jumlah Kakitangan</h3>
-  <ul>
-    <li><strong>Imam:</strong> {{ imam_count }}</li>
-    <li><strong>Muazzin:</strong> {{ muazzin_count }}</li>
-    <li><strong>Siak:</strong> {{ siak_count }}</li>
-  </ul>
-</div>
-
-    </div>
-</div>
-
- <div class="footer">
-    <h4>Hubungi Kami</h4>
-    <p>Masjid Al Mursyid Guring,No. 30, Rpa Pauh(Lama),02600 Arau,Perlis,</p>
-    <p>Email: imamflex@masjid.my | Telefon: +60 19-518 6554</p>
-    <div class="social-icons">
-      <a href="https://www.facebook.com/profile.php?id=100069456158805"><i class="fab fa-facebook-f"></i></a>
-      <a href="#"><i class="fab fa-whatsapp"></i></a>
-    </div>
-  </div>
-
-
-<div id="logoutModal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;">
-  <div style="background: #1b263b; padding: 30px; border-radius: 12px; border: 1px solid gold; box-shadow: 0 0 30px rgba(255,215,0,0.2); width: 90%; max-width: 400px; text-align: center;">
-    <h3 style="color: gold;">Log Keluar</h3>
-    <p style="margin: 15px 0; color: #ccc;">Adakah anda pasti ingin log keluar dari sistem?</p>
-    <div style="margin-top: 25px;">
-      <form method="POST" action="{% url 'logout' %}" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit" style="background: gold; color: #0d1b2a; padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; margin-right: 10px;">Ya, Log Keluar</button>
-      </form>
-      <button onclick="closeLogoutModal()" style="background: transparent; color: #ccc; padding: 10px 20px; border: 1px solid #ccc; border-radius: 6px;">Batal</button>
-    </div>
+<div class="footer">
+  <h4>Hubungi Kami</h4>
+  <p>Masjid Al Mursyid Guring, No. 30, RPA Pauh (Lama), 02600 Arau, Perlis</p>
+  <p>Email: imamflex@masjid.my | Telefon: +60 19-518 6554</p>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/profile.php?id=100069456158805"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-whatsapp"></i></a>
   </div>
 </div>
-
 
 <script>
-    const dropdownBtns = document.querySelectorAll(".dropdown-btn");
-    dropdownBtns.forEach(btn => {
-        btn.addEventListener("click", function () {
-            this.classList.toggle("active");
-            const container = this.nextElementSibling;
-            if (container.style.display === "flex") {
-                container.style.display = "none";
-            } else {
-                container.style.display = "flex";
-            }
-        });
+  const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+  dropdownBtns.forEach(btn => {
+    btn.addEventListener("click", function () {
+      this.classList.toggle("active");
+      const container = this.nextElementSibling;
+      container.style.display = container.style.display === "flex" ? "none" : "flex";
     });
-
-
-  function openLogoutModal() {
-    document.getElementById("logoutModal").style.display = "flex";
-  }
-
-  function closeLogoutModal() {
-    document.getElementById("logoutModal").style.display = "none";
-  }
-
-
+  });
 </script>
 
 </body>

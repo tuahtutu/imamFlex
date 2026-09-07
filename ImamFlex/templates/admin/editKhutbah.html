@@ -89,15 +89,7 @@
         <input type="date" id="date" name="date" value="{{ khutbah.date|date:'Y-m-d' }}" required>
       </div>
 
-      <div class="form-group">
-        <label for="event_type">Jenis Acara</label>
-        <select id="event_type" name="event_type" required>
-          <option value="Biasa" {% if khutbah.event_type == 'Biasa' %}selected{% endif %}>Biasa</option>
-          <option value="Raya Aidilfitri" {% if khutbah.event_type == 'Raya Aidilfitri' %}selected{% endif %}>Raya Aidilfitri</option>
-          <option value="Raya Haji" {% if khutbah.event_type == 'Raya Haji' %}selected{% endif %}>Raya Haji</option>
-          <option value="Kemerdekaan" {% if khutbah.event_type == 'Kemerdekaan' %}selected{% endif %}>Kemerdekaan</option>
-        </select>
-      </div>
+      
 
       <div class="form-group">
         <label for="khutbah_topic">Tajuk Khutbah</label>

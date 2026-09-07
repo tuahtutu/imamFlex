@@ -77,6 +77,97 @@
 
     h2 {
       color: gold;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .solat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .solat-card {
+      background: #1b263b;
+      border: 1px solid gold;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .solat-card h4 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: gold;
+    }
+
+    .solat-card p {
+      margin: 5px 0 0;
+      color: white;
+      font-weight: bold;
+    }
+
+    .footer {
+      background: #0d1b2a;
+      padding: 20px;
+      text-align: center;
+      color: #ccc;
+      border-top: 2px solid gold;
+    }
+
+    .footer h4 {
+      color: gold;
+    }
+
+    .bismillah {
+      font-family: 'Scheherazade', serif;
+      font-size: 3rem;
+      color: gold;
+      margin-bottom: 5px;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: #f1f1f1;
+    }
+
+    .login-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: gold;
+      color: #0d1b2a;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .login-btn:hover {
+      background-color: #ffcc00;
+      transform: translateY(-2px);
+    }
+
+    .section {
+      padding: 40px;
+      flex: 1;
+    }
+
+    h2 {
+      color: gold;
       margin-bottom: 15px;
     }
 
@@ -97,37 +188,26 @@
       margin: 5px 0;
     }
 
-    .footer {
-      background: #0d1b2a;
-      padding: 20px;
-      text-align: center;
-      color: #ccc;
-      border-top: 2px solid gold;
-    }
-
-    .footer h4 {
-      color: gold;
-    }
-
   </style>
 </head>
 <body>
 
 <div class="header-img">
   <div class="header-content">
-    <h1>📜 Khutbah Jumaat</h1>
-    <p>Senarai khutbah lepas dan akan datang</p>
+    <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+    <p class="tagline">Maklumat Harian Jemaah</p>
   </div>
 </div>
 
 <div class="nav">
   <a href="{% url 'jemaah_home' %}">Utama</a>
   <a href="{% url 'jemaah_khutbah' %}">Khutbah</a>
-  <a href="">Notis Khas</a>
+  <a href="{% url 'ajk_info' %}">Pengurusan Masjid</a>
+  
 </div>
 
 <div class="section">
-  <h2>📅 Khutbah Akan Datang</h2>
+  <h2>Khutbah Akan Datang</h2>
   {% if upcoming_khutbah %}
     {% for khutbah in upcoming_khutbah %}
       <div class="khutbah-card">
@@ -148,12 +228,12 @@
     <p>Tiada khutbah akan datang.</p>
   {% endif %}
 
-  <h2>🕰️ Khutbah Yang Telah Berlalu</h2>
+  <h2>Khutbah Yang Telah Berlalu</h2>
 {% if past_khutbah %}
   {% for khutbah in past_khutbah %}
     <div class="khutbah-card">
       <h3>{{ khutbah.khutbah_topic }}</h3>
-      <p><small>{{ khutbah.date|date:"j F Y" }} | Acara: {{ khutbah.event_type }}</small></p>
+      <p><small>{{ khutbah.date|date:"j F Y" }}</small></p>
       <p><strong>Khatib:</strong>
         {% if khutbah.khatib %}
           {{ khutbah.khatib.name }}

@@ -128,13 +128,13 @@
   </div>
 </div>
 <div class="main-wrapper">
-
+  
   <div class="sidebar">
     <h2>ImamFlex</h2>
-    <a href="{% url 'imamDash' %}">Home</a>
-    <a href="{% url 'imam_schedule_side' %}">My Schedule</a>
-    <a href="{% url 'imam_leave_history' %}" class="active">My Leave's Application</a>
-    <a href="{% url 'imam_attendance' %}">My Attendance</a>
+    <a href="{% url 'siakDash' %}">Home</a>
+    <a href="{% url 'siak_schedule_side' %}">My Schedule</a>
+    <a href="{% url 'siak_leave_history' %}" class="active">My Leave's Application</a>
+    <a href="{% url 'siak_attendance' %}">My Attendance</a>
   </div>
 
   <div class="content">
@@ -155,7 +155,7 @@
         <tr>
           <td>{{ leave.start_date|date:"d M Y" }}</td>
           <td>{{ leave.reason }}</td>
-          <td>{{ leave.prayer_time}}</td>
+          <td>{{ leave.prayer_time }}</td>
           <td>
             {% if leave.supporting_document %}
               <a href="{{ leave.supporting_document.url }}" target="_blank">Lihat Fail</a>

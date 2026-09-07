@@ -55,38 +55,50 @@
     </div>
   </div>
 
-  <div class="main-wrapper">
+<div class="main-wrapper">
+
     <div class="sidebar">
-      <h2>ImamFlex</h2>
-      <a href="{% url 'adminDash' %}"><i class="fas fa-home"></i> Home</a>
+        <h2>ImamFlex</h2>
+        <a href="{% url 'adminDash' %}" class="active"><i class="fas fa-home"></i> Home</a>
 
-      <button class="dropdown-btn active"><i class="fas fa-user-tie"></i> Imam</button>
-      <div class="dropdown-container" style="display:flex;">
-        <a href="{% url 'imam_management' %}" class="active">Manage Imam</a>
-        <a href="#">Manage Schedule</a>
-        <a href="#">Manage Leave</a>
+        <button class="dropdown-btn active"><i class="fas fa-user-tie"></i> Imam</button>
+        <div class="dropdown-container" style="display:flex;">
+            <a href="{% url 'imam_management' %}">Manage Imam</a>
+            <a href="{% url 'imam_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn"><i class="fas fa-bullhorn"></i> Muazzin</button>
+        <div class="dropdown-container">
+            <a href="{% url 'muazzin_management' %}">Manage Muazzin</a>
+            <a href="{% url 'muazzin_schedule' %}">Manage Schedule</a>
+            
+        </div>
+
+        <button class="dropdown-btn"><i class="fas fa-tools"></i> Siak</button>
+      <div class="dropdown-container" >
+        <a href="{% url 'siak_management' %}" >Manage Siak</a>
+        <a href="{% url 'siak_schedule' %}">Manage Schedule</a>
+
       </div>
 
-      <button class="dropdown-btn"><i class="fas fa-bullhorn"></i> Muazzin</button>
-      <div class="dropdown-container">
-        <a href="{% url 'muazzin_management' %}">Manage Muazzin</a>
-        <a href="#">Manage Schedule</a>
-        <a href="#">Manage Leave</a>
-      </div>
-
-      <button class="dropdown-btn"><i class="fas fa-tools"></i> Siak</button>
-      <div class="dropdown-container">
-        <a href="#">Manage Siak</a>
-        <a href="#">Manage Schedule</a>
-        <a href="#">Manage Leave</a>
-      </div>
+       <button class="dropdown-btn"><i class="fas fa-calendar-check"></i> Leave</button>
+        <div class="dropdown-container">
+            <a href="{% url 'admin_leave_list' %}">Manage Leave</a>
+            
+        </div>
 
       <button class="dropdown-btn"><i class="fas fa-pray"></i> Jumaat</button>
       <div class="dropdown-container">
-        <a href="#">Placeholder 1</a>
+        <a href="{% url 'khutbah_list' %}">Khutbah</a>
       </div>
 
-      
+      <button class="dropdown-btn"><i class="fas fa-chart-bar"></i> Attendance Report</button>
+        <div class="dropdown-container">
+            <a href="{% url 'attendance_report' %}">Attendance Report</a>
+        </div>
+
+       
     </div>
 
     <div class="content">
@@ -100,7 +112,7 @@
         <a href="{% url 'add_imam' %}" class="btn btn-add">+ Tambah Imam</a>
         <table>
           <thead>
-            <tr><th>ID</th><th>Nama</th><th>No IC</th><th>No Telefon</th><th>Tindakan</th></tr>
+            <tr><th>ID</th><th>Nama</th><th>No IC</th><th>E-mail</th><th>No Telefon</th><th>Tindakan</th></tr>
           </thead>
           <tbody>
             {% for imam in imams %}
@@ -108,6 +120,7 @@
               <td>{{ imam.imam_id }}</td>
               <td>{{ imam.name }}</td>
               <td>{{ imam.ic_number }}</td>
+              <td>{{ imam.email }}</td>
               <td>{{ imam.contact_number }}</td>
               <td>
                 <a href="{% url 'edit_imam' imam.imam_id %}" class="btn btn-edit">Edit</a>

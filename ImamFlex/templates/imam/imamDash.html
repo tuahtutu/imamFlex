@@ -106,16 +106,44 @@
       color: white;
     }
 
-    .profile-icon {
-      width: 35px;
-      height: 35px;
-      background-color: gold;
-      border-radius: 50%;
-      color: #0d1b2a;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+ .profile-icon {
+  width: 40px;
+  height: 40px;
+  background-color: gold;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #0d1b2a;
+  font-size: 1.2rem;
+  overflow: hidden;
+}
+
+.big-profile {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gold;
+}
+
+.big-profile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.big-profile img:hover {
+  transform: scale(1.1);
+}
+
+
+
 
     .card {
       background-color: rgba(255,255,255,0.05);
@@ -186,17 +214,7 @@
             cursor: pointer;
         }
 
-        .profile-icon {
-            width: 35px;
-            height: 35px;
-            background-color: gold;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #0d1b2a;
-            font-size: 1.2rem;
-        }
+     
 
         .dropdown-content {
             display: none;
@@ -236,17 +254,16 @@
 </div>
 
 <div class="main-wrapper">
-  <!-- Sidebar -->
+ 
   <div class="sidebar">
     <h2>ImamFlex</h2>
     <a href="{% url 'imamDash' %}" class="active">Home</a>
-    <a href="{% url 'imam_schedule_side' %}">Jadual Saya</a>
-    <a href="{% url 'imam_leave_history' %}">Permohonan Cuti</a>
-    <a href="{% url 'imam_attendance' %}">Kehadiran</a>
-    <a href="{% url 'logout' %}">Logout</a>
+    <a href="{% url 'imam_schedule_side' %}">My Schedule</a>
+    <a href="{% url 'imam_leave_history' %}">My Leave's Application</a>
+    <a href="{% url 'imam_attendance' %}">My Attendance</a>
   </div>
 
-  <!-- Content -->
+
  <div class="content">
         <div class="welcome-card">
             <div>
@@ -255,10 +272,19 @@
             </div>
             <div class="dropdown">
                 <button class="dropbtn">
+                    {% if imam.profile_picture %}
+                    <div class="big-profile">
+                    <img src="{{ imam.profile_picture.url }}" alt="Profil">
+                    </div>
+
+                    {% else %}
                     <div class="profile-icon"><i class="fas fa-user"></i></div>
+                    {% endif %}
+
+
                 </button>
                 <div class="dropdown-content">
-                    <a href="#"><i class="fas fa-user-cog"></i> Profil</a>
+                    <a href="{% url 'imam_profile' %}"><i class="fas fa-user-cog"></i> Profil</a>
                     <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 </div>
             </div>
@@ -276,6 +302,23 @@
         <p>Tiada Jadual untuk harini!</p>
       {% endif %}
     </div>
+   <div class="card">
+  <h3>Tugasan Sebagai Pengganti ({{ month_name }} {{ today.year }})</h3>
+  {% if replacement_this_month %}
+    {% if replacement_this_month.count > 0 %}
+      <ul>
+        {% for duty in replacement_this_month %}
+          <li><strong>{{ duty.date }}</strong>: {{ duty.prayer_time }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Tiada tugasan pengganti bulan ini.</p>
+    {% endif %}
+  {% else %}
+    <p>Tiada tugasan pengganti bulan ini.</p>
+  {% endif %}
+</div>
+
 
     <div class="card">
       <h3>Khutbah Akan Datang</h3>

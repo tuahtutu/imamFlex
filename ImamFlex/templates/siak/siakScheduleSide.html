@@ -131,12 +131,13 @@
 <div class="main-wrapper">
  
   <div class="sidebar">
-    <h2>ImamFlex</h2>
-    <a href="{% url 'imamDash' %}">Home</a>
-    <a href="{% url 'imam_schedule_side' %}" class="active">My Schedule</a>
-    <a href="{% url 'imam_leave_history' %}">My Leave's Application</a>
-    <a href="{% url 'imam_attendance' %}">My Attendance</a>
-  </div>
+  <h2>ImamFlex</h2>
+  <a href="{% url 'siakDash' %}">Home</a>
+  <a href="{% url 'siak_schedule_side' %}" class="active">My Schedule</a>
+  <a href="{% url 'siak_leave_history' %}">My Leave's Application</a>
+  <a href="{% url 'siak_attendance' %}">My Attendance</a>
+</div>
+
 
   <div class="content">
     <h2>Jadual Tugasan - {{ month_name }} {{ year }}</h2>
@@ -175,7 +176,6 @@
   <p>Email: imamflex@masjid.my | Tel: +60 19-518 6554</p>
 </div>
 
-
 <div id="leaveModal" class="modal" style="display: none; position: fixed; top: 0; left: 0;
     width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); justify-content: center; align-items: center;">
   <div style="background: #1b263b; padding: 2rem; border-radius: 10px; width: 80%; max-width: 500px; color: white;">
@@ -193,7 +193,8 @@
   </script>
 {% endif %}
 
-<form id="leaveForm" method="post" enctype="multipart/form-data" action="{% url 'apply_leave' %}">
+<form id="leaveForm" method="post" enctype="multipart/form-data" action="{% url 'apply_leave_siak' %}">
+
       {% csrf_token %}
       <input type="hidden" name="date" id="leaveDateInput">
       <input type="hidden" name="prayer_time" id="prayerTimeInput">

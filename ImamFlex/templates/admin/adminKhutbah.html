@@ -80,6 +80,36 @@
       cursor: pointer;
       margin-bottom: 20px;
     }
+    .btn-action {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-right: 8px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-approve {
+  background-color: gold;
+  color: #0d1b2a;
+}
+
+.btn-approve:hover {
+  background-color: #ffd700;
+  color: #1b263b;
+}
+
+.btn-reject {
+  background-color: darkred;
+  color: white;
+}
+
+.btn-reject:hover {
+  background-color: #a30000;
+  color: #fff;
+}
+
     .footer {
       background: #0d1b2a;
       padding: 30px 20px;
@@ -105,10 +135,10 @@
   </div>
 </div>
 <div class="main-wrapper">
-    <!-- Sidebar -->
+
     <div class="sidebar">
         <h2>ImamFlex</h2>
-        <a href="{% url 'adminDash' %}"><i class="fas fa-home"></i> Home</a>
+        <a href="{% url 'adminDash' %}" class="active"><i class="fas fa-home"></i> Home</a>
 
         <button class="dropdown-btn"><i class="fas fa-user-tie"></i> Imam</button>
         <div class="dropdown-container">
@@ -137,10 +167,16 @@
             
         </div>
 
-      <button class="dropdown-btn" class="active"><i class="fas fa-pray"></i> Jumaat</button>
-      <div class="dropdown-container" style="display: flex;">
+      <button class="dropdown-btn active"><i class="fas fa-pray"></i> Jumaat</button>
+      <div class="dropdown-container" style="display:flex;">
         <a href="{% url 'khutbah_list' %}">Khutbah</a>
       </div>
+
+      <button class="dropdown-btn"><i class="fas fa-chart-bar"></i> Attendance Report</button>
+        <div class="dropdown-container">
+            <a href="{% url 'attendance_report' %}">Attendance Report</a>
+        </div>
+
 
        
     </div>
@@ -151,7 +187,6 @@
       <thead>
         <tr>
           <th>Tarikh</th>
-          <th>Jenis</th>
           <th>Tajuk</th>
           <th>Khatib</th>
           <th>Tindakan</th>
@@ -161,7 +196,6 @@
         {% for khutbah in khutbahs %}
         <tr>
           <td>{{ khutbah.date }}</td>
-          <td>{{ khutbah.event_type }}</td>
           <td>{{ khutbah.khutbah_topic }}</td>
           <td>{{ khutbah.khatib.name }}</td>
           <td>

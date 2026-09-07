@@ -174,12 +174,13 @@
 <div class="nav">
   <a href="{% url 'jemaah_home' %}">Utama</a>
   <a href="{% url 'jemaah_khutbah' %}">Khutbah</a>
-  <a href="#">Notis Khas</a>
+  <a href="{% url 'ajk_info' %}">Pengurusan Masjid</a>
+  
 </div>
 
 <div class="section">
 
-  <!-- Waktu Solat -->
+ 
   <div class="card">
     <h2>🕋 Waktu Solat Hari Ini</h2>
     <div class="solat-grid">
@@ -191,7 +192,7 @@
     </div>
   </div>
 
-  <!-- Tugasan Hari Ini -->
+ 
   <div class="card">
     <h2>🗓️ Jadual Tugasan Hari Ini</h2>
     <div class="solat-grid">
@@ -210,7 +211,7 @@
     </div>
   </div>
 
-  <!-- Notis Khas -->
+  
   <div class="card">
     <h2>📢 Notis Khas</h2>
     {% if notices %}
@@ -232,7 +233,7 @@
   <p>Email: imamflex@masjid.my | Tel: +60 19-518 6554</p>
 </div>
 
-<!-- Login Button -->
+
 <a href="{% url 'login' %}" class="login-btn">
   <i class="fas fa-user-shield"></i> Log Masuk AJK
 </a>

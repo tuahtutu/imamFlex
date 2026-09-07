@@ -42,16 +42,59 @@
       color: #f1f1f1;
       margin-top: 10px;
     }
- .main-wrapper { display:flex; flex:1; }
-    .sidebar { width:240px; background:#0d1b2a; padding-top:30px; display:flex; flex-direction:column; box-shadow:4px 0 10px rgba(0,0,0,0.3); }
-    .sidebar h2 { color:gold; text-align:center; margin-bottom:20px; }
-    .sidebar a, .dropdown-btn { text-decoration:none; color:white; font-weight:600; padding:12px 20px; font-size:0.95rem; border:none; background:none; width:100%; display:flex; align-items:center; gap:10px; cursor:pointer; transition:background 0.3s;color:white; font-family:'Poppins',sans-serif; }
-    .sidebar a:hover, .dropdown-btn:hover { background:gold; color:#1b1b1b; }
-    .active { background:gold; color:#1b1b1b; }
-    .dropdown-btn::after { content:'\f107'; font-family:'Font Awesome 5 Free'; font-weight:900; margin-left:auto; transition:transform 0.3s; }
-    .dropdown-btn.active::after { transform:rotate(180deg); }
-    .dropdown-container { display:none; flex-direction:column; padding-left:30px; }
-    .dropdown-container a { font-size:0.9rem; padding:8px 0; }
+    .main-wrapper { display: flex; flex: 1; }
+    .sidebar {
+      width: 240px;
+      background: #0d1b2a;
+      padding-top: 30px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+    }
+    .sidebar h2 { color: gold; text-align: center; margin-bottom: 20px; }
+    .sidebar a, .dropdown-btn {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      padding: 12px 20px;
+      font-size: 0.95rem;
+      border: none;
+      background: none;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+    .sidebar a:hover, .dropdown-btn:hover {
+      background: gold;
+      color: #1b1b1b;
+    }
+    .active {
+      background: gold;
+      color: #1b1b1b;
+    }
+    .dropdown-btn::after {
+      content: '\f107';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      margin-left: auto;
+      transition: transform 0.3s;
+    }
+    .dropdown-btn.active::after {
+      transform: rotate(180deg);
+    }
+    .dropdown-container {
+      display: none;
+      flex-direction: column;
+      padding-left: 30px;
+    }
+    .dropdown-container a {
+      font-size: 0.9rem;
+      padding: 8px 0;
+    }
     .content {
       flex: 1;
       padding: 30px 40px;
@@ -79,6 +122,7 @@
       border-radius: 5px;
       font-weight: bold;
       cursor: pointer;
+      text-decoration: none;
     }
     .btn-approve {
       background-color: #28a745;
@@ -87,6 +131,10 @@
     .btn-reject {
       background-color: #dc3545;
       color: white;
+    }
+    .btn-replace {
+      background-color: gold;
+      color: #0d1b2a;
     }
     .footer {
       background: #0d1b2a;
@@ -112,46 +160,45 @@
     <div class="tagline">Selamat datang ke ImamFlex - Sistem Pengurusan Imam & Khutbah</div>
   </div>
 </div>
+
 <div class="main-wrapper">
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h2>ImamFlex</h2>
-        <a href="{% url 'adminDash' %}" class="active"><i class="fas fa-home"></i> Home</a>
+  <div class="sidebar">
+    <h2>ImamFlex</h2>
+    <a href="{% url 'adminDash' %}" class="active"><i class="fas fa-home"></i> Home</a>
 
-        <button class="dropdown-btn"><i class="fas fa-user-tie"></i> Imam</button>
-        <div class="dropdown-container">
-            <a href="{% url 'imam_management' %}">Manage Imam</a>
-            <a href="{% url 'imam_schedule' %}">Manage Schedule</a>
-            
-        </div>
-
-        <button class="dropdown-btn"><i class="fas fa-bullhorn"></i> Muazzin</button>
-        <div class="dropdown-container">
-            <a href="{% url 'muazzin_management' %}">Manage Muazzin</a>
-            <a href="{% url 'muazzin_schedule' %}">Manage Schedule</a>
-            
-        </div>
-
-        <button class="dropdown-btn"><i class="fas fa-tools"></i> Siak</button>
-      <div class="dropdown-container" >
-        <a href="{% url 'siak_management' %}" >Manage Siak</a>
-        <a href="{% url 'siak_schedule' %}">Manage Schedule</a>
-
-      </div>
-
-       <button class="dropdown-btn"><i class="fas fa-calendar-check"></i> Leave</button>
-        <div class="dropdown-container">
-            <a href="{% url 'admin_leave_list' %}">Manage Leave</a>
-            
-        </div>
-
-      <button class="dropdown-btn"><i class="fas fa-pray"></i> Jumaat</button>
-      <div class="dropdown-container">
-        <a href="{% url 'khutbah_list' %}">Khutbah</a>
-      </div>
-
-       
+    <button class="dropdown-btn"><i class="fas fa-user-tie"></i> Imam</button>
+    <div class="dropdown-container">
+      <a href="{% url 'imam_management' %}">Manage Imam</a>
+      <a href="{% url 'imam_schedule' %}">Manage Schedule</a>
     </div>
+
+    <button class="dropdown-btn"><i class="fas fa-bullhorn"></i> Muazzin</button>
+    <div class="dropdown-container">
+      <a href="{% url 'muazzin_management' %}">Manage Muazzin</a>
+      <a href="{% url 'muazzin_schedule' %}">Manage Schedule</a>
+    </div>
+
+    <button class="dropdown-btn"><i class="fas fa-tools"></i> Siak</button>
+    <div class="dropdown-container">
+      <a href="{% url 'siak_management' %}">Manage Siak</a>
+      <a href="{% url 'siak_schedule' %}">Manage Schedule</a>
+    </div>
+
+    <button class="dropdown-btn active"><i class="fas fa-calendar-check"></i> Leave</button>
+    <div class="dropdown-container" style="display:flex;">
+      <a href="{% url 'admin_leave_list' %}">Manage Leave</a>
+    </div>
+
+    <button class="dropdown-btn"><i class="fas fa-pray"></i> Jumaat</button>
+    <div class="dropdown-container">
+      <a href="{% url 'khutbah_list' %}">Khutbah</a>
+    </div>
+
+    <button class="dropdown-btn"><i class="fas fa-chart-bar"></i> Attendance Report</button>
+        <div class="dropdown-container">
+            <a href="{% url 'attendance_report' %}">Attendance Report</a>
+        </div>
+  </div>
 
   <div class="content">
     <h2>Senarai Permohonan Cuti</h2>
@@ -161,6 +208,7 @@
           <th>Nama</th>
           <th>Role</th>
           <th>Tarikh</th>
+          <th>Waktu Solat</th>
           <th>Sebab</th>
           <th>Status</th>
           <th>Dokumen</th>
@@ -173,6 +221,7 @@
           <td>{{ leave.staff_name }}</td>
           <td>{{ leave.role_type }}</td>
           <td>{{ leave.start_date }} - {{ leave.end_date }}</td>
+          <td>{{ leave.prayer_time }}</td>
           <td>{{ leave.reason }}</td>
           <td>{{ leave.approval_status }}</td>
           <td>
@@ -184,7 +233,15 @@
             {% if leave.approval_status == 'Pending' %}
               <a href="{% url 'approve_leave' leave.request_id %}" class="btn-action btn-approve">Approve</a>
               <a href="{% url 'reject_leave' leave.request_id %}" class="btn-action btn-reject">Reject</a>
-            {% else %}-{% endif %}
+            {% elif leave.approval_status == 'Approved' %}
+              {% if leave.replacement_assigned %}
+                <span style="color:gold; font-weight:bold;">{{ leave.replacement_name }}</span>
+              {% else %}
+                <a href="{% url 'assign_replacement' leave.request_id %}" class="btn-action btn-replace">Cari Pengganti</a>
+              {% endif %}
+            {% else %}
+              -
+            {% endif %}
           </td>
         </tr>
         {% empty %}
@@ -194,6 +251,7 @@
     </table>
   </div>
 </div>
+
 <div class="footer">
   <h4>Hubungi Kami</h4>
   <p>Masjid Al Mursyid Guring, No. 30, RPA Pauh(Lama), 02600 Arau, Perlis</p>
@@ -203,6 +261,7 @@
     <a href="#"><i class="fab fa-whatsapp"></i></a>
   </div>
 </div>
+
 <script>
   const dropdownBtns = document.querySelectorAll(".dropdown-btn");
   dropdownBtns.forEach(btn => {

@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Login - ImamFlex</title>
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a2d9b6cfcb.js" crossorigin="anonymous"></script>
 
@@ -22,7 +21,7 @@
             overflow-x: hidden;
         }
 
-        /* Hero Header */
+     
         .hero {
             position: relative;
             width: 100%;
@@ -35,7 +34,7 @@
             text-align: center;
         }
 
-        /* Overlay gelap */
+
         .hero::before {
             content: "";
             position: absolute;
@@ -65,7 +64,6 @@
             text-shadow: 0 0 10px rgba(255,255,255,0.2);
         }
 
-        /* Login Card */
         .login-container {
             backdrop-filter: blur(15px);
             background-color: rgba(255, 255, 255, 0.1);
@@ -132,7 +130,7 @@
             box-shadow: 0 8px 16px rgba(255, 215, 0, 0.4);
         }
 
-        /* Footer */
+       
         .footer {
             margin-top: auto;
             background-color: #0d1b2a;
@@ -162,6 +160,22 @@
             color: white;
         }
 
+        .back-button {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: gold;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.back-button:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+
         @media (max-width: 600px) {
             .bismillah {
                 font-size: 3rem;
@@ -189,6 +203,8 @@
                 </div>
                 <button type="submit">Masuk</button>
             </form>
+            <a href="{% url 'jemaah_home' %}" class="back-button">← Kembali ke Halaman Jemaah</a>
+
         </div>
     </div>
 

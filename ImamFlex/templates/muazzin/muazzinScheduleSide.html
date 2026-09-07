@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Jadual Imam Saya - ImamFlex</title>
+  <title>Jadual Muazzin Saya - ImamFlex</title>
   <link href="https://fonts.googleapis.com/css2?family=Scheherazade&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
@@ -124,7 +124,7 @@
 <body>
 <div class="header-img">
   <div>
-    <div class="bismillah">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</div>
     <div class="tagline">Jadual Tugasan Saya</div>
   </div>
 </div>
@@ -132,10 +132,10 @@
  
   <div class="sidebar">
     <h2>ImamFlex</h2>
-    <a href="{% url 'imamDash' %}">Home</a>
-    <a href="{% url 'imam_schedule_side' %}" class="active">My Schedule</a>
-    <a href="{% url 'imam_leave_history' %}">My Leave's Application</a>
-    <a href="{% url 'imam_attendance' %}">My Attendance</a>
+    <a href="{% url 'muazzinDash' %}">Home</a>
+    <a href="{% url 'muazzin_schedule_side' %}" class="active">My Schedule</a>
+    <a href="{% url 'muazzin_leave_history' %}">My Leave's Application</a>
+    <a href="{% url 'muazzin_attendance' %}">My Attendance</a>
   </div>
 
   <div class="content">
@@ -146,20 +146,18 @@
           {% if day %}
             <div class="day-box">
               <div class="date">{{ day.date.day }}</div>
-           {% for duty in day.duties %}
-  <div class="schedule-entry"
-       {% if duty.is_replacement %}style="color: #f9d342;"{% endif %}>
-    {{ duty.prayer_time }}
-    {% if duty.is_replacement %}
-      <span style="font-size: 0.8rem; color: gold;">(Pengganti)</span>
-    {% endif %}
-    <button onclick="openLeaveModal('{{ day.date }}', '{{ duty.prayer_time }}')">
-      <i class="fas fa-paper-plane"></i> Mohon Cuti
-    </button>
-  </div>
-{% endfor %}
-
-
+              {% for duty in day.duties %}
+              <div class="schedule-entry"
+                   {% if duty.is_replacement %}style="color: #f9d342;"{% endif %}>
+                {{ duty.prayer_time }}
+                {% if duty.is_replacement %}
+                  <span style="font-size: 0.8rem; color: gold;">(Pengganti)</span>
+                {% endif %}
+                <button onclick="openLeaveModal('{{ day.date }}', '{{ duty.prayer_time }}')">
+                  <i class="fas fa-paper-plane"></i> Mohon Cuti
+                </button>
+              </div>
+              {% endfor %}
             </div>
           {% else %}
             <div class="day-box" style="background: transparent; border: none;"></div>
@@ -180,24 +178,21 @@
     width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); justify-content: center; align-items: center;">
   <div style="background: #1b263b; padding: 2rem; border-radius: 10px; width: 80%; max-width: 500px; color: white;">
     <h2>Mohon Cuti</h2>
-    
- {% if show_modal_success %}
-  <div id="toast" style="position: fixed; top: 20px; right: 20px; background: green; color: white; padding: 10px 20px; border-radius: 5px; z-index: 9999;">
-    Permohonan cuti berjaya dihantar.
-  </div>
-  <script>
-    setTimeout(() => {
-      const toast = document.getElementById("toast");
-      if (toast) toast.remove();
-    }, 4000);
-  </script>
-{% endif %}
-
-<form id="leaveForm" method="post" enctype="multipart/form-data" action="{% url 'apply_leave' %}">
+    {% if show_modal_success %}
+    <div id="toast" style="position: fixed; top: 20px; right: 20px; background: green; color: white; padding: 10px 20px; border-radius: 5px; z-index: 9999;">
+      Permohonan cuti berjaya dihantar.
+    </div>
+    <script>
+      setTimeout(() => {
+        const toast = document.getElementById("toast");
+        if (toast) toast.remove();
+      }, 4000);
+    </script>
+    {% endif %}
+    <form id="leaveForm" method="post" enctype="multipart/form-data" action="{% url 'apply_leave_muazzin' %}">
       {% csrf_token %}
       <input type="hidden" name="date" id="leaveDateInput">
       <input type="hidden" name="prayer_time" id="prayerTimeInput">
-      
       <label>Sebab Permohonan:</label>
       <textarea name="reason" required style="width: 100%; height: 80px;"></textarea>
       <label>Dokumen Sokongan (jika ada):</label>
@@ -209,9 +204,6 @@
 </div>
 
 <script>
-     window.onload = function() {
-
-}
   function openLeaveModal(date, prayer) {
     document.getElementById("leaveModal").style.display = "flex";
     document.getElementById("leaveDateInput").value = date;
@@ -220,8 +212,6 @@
   function closeLeaveModal() {
     document.getElementById("leaveModal").style.display = "none";
   }
-  
 </script>
-
 </body>
 </html>
